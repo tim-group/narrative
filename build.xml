@@ -14,6 +14,9 @@
         <jar jarfile="narrative-${DSTAMP}.jar">
             <fileset dir="build/src"/>
             <fileset dir="src"/>
+        	<metainf>
+        		<fileset file="README"/>
+        	</metainf>
         </jar>
     </target>
     

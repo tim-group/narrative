@@ -1,0 +1,3 @@
+This is the youDevise Ltd. Narrative test framework. If you need to patch and update the version used in another project you
+need to check out the sources from the repository.  Then run ant (with no target) from the command line. This will create a new jar that
+you can then copy into your project.
