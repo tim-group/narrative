@@ -15,10 +15,11 @@ import static org.hamcrest.Matchers.contains;
 public class CompositeActionBuilderTest {
     private Mockery context = new Mockery();
     
-    @SuppressWarnings("unchecked")
     @Test public void
     performsEachComponentActionInTurn() {
+        @SuppressWarnings("unchecked")
         final Action<Object> child1 = context.mock(Action.class, "first child");
+        @SuppressWarnings("unchecked")
         final Action<Object> child2 = context.mock(Action.class, "second child");
         final Object tool = new Object();
         final Stash stash = new HashMapStash();
@@ -29,7 +30,7 @@ public class CompositeActionBuilderTest {
             oneOf(child2).performFor(tool, stash); inSequence(ordering);
         }});
         
-        CompositeActionBuilder<Object> builder = new CompositeActionBuilder().of(child1).andThen(child2);
+        CompositeActionBuilder<Object> builder = CompositeActionBuilder.of(child1).andThen(child2);
         builder.build().performFor(tool, stash);
         
         context.assertIsSatisfied();
@@ -49,11 +50,12 @@ public class CompositeActionBuilderTest {
             ignoring(child2);
         }});
         
-        CompositeActionBuilder<Object> builder = new CompositeActionBuilder().beforeEach(new ActionHandler<Object>() {
-            @Override public void handle(Action<Object> action, Object tool, Stash stash) {
-                handled.add(action);
-            }
-        }).of(child1).andThen(child2);
+        CompositeActionBuilder<Object> builder = CompositeActionBuilder.of(child1).andThen(child2)
+            .beforeEach(new ActionHandler<Object>() {
+                @Override public void handle(Action<Object> action, Object tool, Stash stash) {
+                    handled.add(action);
+                }
+            });
         builder.build().performFor(tool, stash);
         
         assertThat(handled, contains(child1, child2));
