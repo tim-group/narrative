@@ -36,6 +36,17 @@ public class CompositeActionBuilderTest {
         context.assertIsSatisfied();
     }
     
+    @Test public void
+    canStartWithNoActionsInitially() {
+        final Object tool = new Object();
+        final Stash stash = new HashMapStash();
+        
+        CompositeActionBuilder<Object> builder = CompositeActionBuilder.forActionsOf(Object.class);
+        builder.build().performFor(tool, stash);
+        
+        context.assertIsSatisfied();
+    }
+    
     @SuppressWarnings("unchecked")
     @Test public void
     canHookIntoBeforeTheActionCall() {

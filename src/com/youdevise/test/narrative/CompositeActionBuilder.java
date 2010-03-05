@@ -9,7 +9,17 @@ public class CompositeActionBuilder<T> {
     private final List<Action<T>> children = new ArrayList<Action<T>>();
     private final ActionHandler<T> handler;
     
-    public CompositeActionBuilder(Action<T> child) { 
+    public static <T> CompositeActionBuilder<T> of(Action<T> firstChild) {
+        return new CompositeActionBuilder<T>(firstChild);
+    }
+    
+    public static <T> CompositeActionBuilder<T> forActionsOf(Class<T> actionType) {
+        return new CompositeActionBuilder<T>(new Action<T>() {
+            @Override public void performFor(T tool, Stash stash) { }
+        });
+    }
+    
+    private CompositeActionBuilder(Action<T> child) { 
         children.add(child);
         this.handler = new ActionHandler<T>() {
             @Override public void handle(Action<T> action, T tool, Stash stash) { }
@@ -31,10 +41,6 @@ public class CompositeActionBuilder<T> {
         return unmodifiableList(children);
     }
     
-    public static <T> CompositeActionBuilder<T> of(Action<T> firstChild) {
-        return new CompositeActionBuilder<T>(firstChild);
-    }
-    
     public CompositeActionBuilder<T> andThen(Action<T> nextChild) {
         return new CompositeActionBuilder<T>(this, nextChild);
     }
@@ -54,4 +60,5 @@ public class CompositeActionBuilder<T> {
     public CompositeActionBuilder<T> beforeEach(ActionHandler<T> actionHandler) {
         return new CompositeActionBuilder<T>(this, actionHandler);
     }
+
 }
