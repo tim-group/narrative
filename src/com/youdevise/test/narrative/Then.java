@@ -25,6 +25,10 @@ public class Then<T> {
         }
 
         public TypedMatcher<D> shouldBe(Matcher<? super D> matcher) {
+            return should(matcher);
+        }
+        
+        public TypedMatcher<D> should(Matcher<? super D> matcher) {
             assertThat(actor.grabUsing(expected), matcher);
             return this;
         }
