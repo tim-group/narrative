@@ -10,14 +10,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class Then<T> {
     private final Actor<T> actor;
-    
+
     /**
      * Type safe matching.
      * @param <D> The type of data that is going to be checked
      */
     public class TypedMatcher<D> {
         private final Extractor<D, T> expected;
-        private Then<T> outer;
+        private final Then<T> outer;
 
         public TypedMatcher(Extractor<D, T> expected, Then<T> outer) {
             this.expected = expected;
@@ -27,12 +27,16 @@ public class Then<T> {
         public TypedMatcher<D> shouldBe(Matcher<? super D> matcher) {
             return should(matcher);
         }
-        
+
+        public TypedMatcher<D> shouldHave(Matcher<? super D> matcher) {
+            return should(matcher);
+        }
+
         public TypedMatcher<D> should(Matcher<? super D> matcher) {
             assertThat(actor.grabUsing(expected), matcher);
             return this;
         }
-        
+
         public Then<T> andAlso() {
             return outer;
         }
