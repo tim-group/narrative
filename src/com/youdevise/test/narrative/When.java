@@ -1,7 +1,7 @@
 package com.youdevise.test.narrative;
 
 /**
- * Action declaration of what the Actor does to acheive the final desired result, which is then checked with a Then statement.
+ * Action declaration of what the Actor does to achieve the final desired result, which is then checked with a Then statement.
  * @param <T> The type of the tool the Actor uses
  */
 public class When<T> {
