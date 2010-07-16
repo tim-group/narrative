@@ -19,4 +19,8 @@ public class When<T> {
         actor.perform(action);
         return this;
     }
+    
+    public When<T> attempts_to(Action<T> action) {
+        return attemptsTo(action);
+    }
 }

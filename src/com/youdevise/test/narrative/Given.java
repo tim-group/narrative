@@ -19,4 +19,8 @@ public class Given<T> {
         actor.perform(action);
         return this;
     }
+    
+    public Given<T> was_able_to(Action<T> action) {
+        return wasAbleTo(action);
+    }
 }

@@ -50,6 +50,10 @@ public class Then<T> {
         return new TypedMatcher<D>(expected, this);
     }
 
+    public <D> TypedMatcher<D> expects_that(Extractor<D, T> expected) {
+        return expectsThat(expected);
+    }
+
     public static <T> Then<T> the(Actor<T> actor) {
         return new Then<T>(actor);
     }
