@@ -28,7 +28,7 @@ public class Then<T> {
             return should(matcher);
         }
 
-        public TypedMatcher<D> shouldHave(Matcher<? super D> matcher) {
+        public TypedMatcher<D> should_have(Matcher<? super D> matcher) {
             return should(matcher);
         }
 
