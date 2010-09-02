@@ -24,8 +24,12 @@ public class Then<T> {
             this.outer = outer;
         }
 
-        public TypedMatcher<D> shouldBe(Matcher<? super D> matcher) {
+        public TypedMatcher<D> should_be(Matcher<? super D> matcher) {
             return should(matcher);
+        }
+        
+        public TypedMatcher<D> shouldBe(Matcher<? super D> matcher) {
+            return should_be(matcher);
         }
 
         public TypedMatcher<D> should_have(Matcher<? super D> matcher) {
