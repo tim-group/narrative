@@ -44,6 +44,10 @@ public class Then<T> {
         public Then<T> andAlso() {
             return outer;
         }
+
+        public <X> TypedMatcher<X> and_also_expects_that(Extractor<X, T> next_expected) {
+            return outer.expects_that(next_expected);
+        }
     }
 
     private Then(Actor<T> actor) {
