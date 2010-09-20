@@ -15,6 +15,10 @@ public class When<T> {
         return new When<T>(actor);
     }
     
+    public <S> When<S> and_the(Actor<S> actor) {
+        return new When<S>(actor);
+    }
+    
     public When<T> attemptsTo(Action<T> action) {
         actor.perform(action);
         return this;

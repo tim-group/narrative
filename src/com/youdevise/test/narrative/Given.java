@@ -15,6 +15,10 @@ public class Given<T> {
         return new Given<T>(actor);
     }
 
+    public <S> Given<S> and_the(Actor<S> actor) {
+        return new Given<S>(actor);
+    }
+
     public Given<T> wasAbleTo(Action<T> action) {
         actor.perform(action);
         return this;
