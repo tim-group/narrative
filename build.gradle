@@ -1,0 +1,21 @@
+dependencies {
+    compile      group: 'org.hamcrest',  name: 'hamcrest-all',    version: '1.2'
+    
+    testCompile  group: 'org.hamcrest',  name: 'hamcrest-all',    version: '1.2'
+    testCompile  group: 'org.jmock',     name: 'jmock',           version: '2.6.0-RC1'
+    testCompile  group: 'org.jmock',     name: 'jmock-junit4',    version: '2.6.0-RC1'
+    testCompile  group: "junit",         name: 'junit-dep',       version: "4.+"
+}
+
+configurations {
+    testCompile.exclude module: "hamcrest"
+}
+
+task build_dev(dependsOn: ':Narrative:uploadDefault')
+task test_dev(dependsOn: [':Narrative:build_dev', ':Narrative:test'])
+task clean_dev(dependsOn: [':Narrative:clean'])
+
+
+test.doFirst { 
+    println sourceSets.main.compileClasspath.asPath
+}
