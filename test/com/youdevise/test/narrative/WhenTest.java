@@ -22,7 +22,7 @@ public class WhenTest {
             oneOf(actor).perform(action);
         }});
         
-        When.the(actor).attemptsTo(action);
+        When.the(actor).attempts_to(action);
     }
     
     @SuppressWarnings("unchecked")
@@ -38,7 +38,7 @@ public class WhenTest {
             oneOf(actor).perform(otherAction); inSequence(orderOfActions);
         }});
         
-        When.the(actor).attemptsTo(action)
-                       .attemptsTo(otherAction);
+        When.the(actor).attempts_to(action)
+                       .attempts_to(otherAction);
     }
 }

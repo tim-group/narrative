@@ -22,7 +22,7 @@ public class ThenTest {
             oneOf(actor).grabUsing(extractor); will(returnValue('a'));
         }});
         
-        Then.the(actor).expectsThat(extractor).shouldBe(is('a'));
+        Then.the(actor).expects_that(extractor).should_be(is('a'));
     }
     
     @SuppressWarnings("unchecked")
@@ -35,7 +35,7 @@ public class ThenTest {
             oneOf(actor).grabUsing(extractor); will(returnValue('b'));
         }});
         
-        Then.the(actor).expectsThat(extractor).shouldBe(is('a'));
+        Then.the(actor).expects_that(extractor).should_be(is('a'));
     }
     
     @SuppressWarnings("unchecked")
@@ -50,8 +50,8 @@ public class ThenTest {
             oneOf(actor).grabUsing(stringExtractor); will(returnValue("string"));
         }});
         
-        Then.the(actor).expectsThat(characterExtractor).shouldBe(is('a'))
-             .andAlso().expectsThat(stringExtractor).shouldBe(is("string"));
+        Then.the(actor).expects_that(characterExtractor).should_be(is('a'))
+             .andAlso().expects_that(stringExtractor).should_be(is("string"));
     }
     
     @SuppressWarnings("unchecked")
@@ -66,7 +66,7 @@ public class ThenTest {
             oneOf(actor).grabUsing(stringExtractor); will(returnValue("not the string"));
         }});
         
-        Then.the(actor).expectsThat(characterExtractor).shouldBe(is('a'))
-             .andAlso().expectsThat(stringExtractor).shouldBe(is("string"));
+        Then.the(actor).expects_that(characterExtractor).should_be(is('a'))
+             .andAlso().expects_that(stringExtractor).should_be(is("string"));
     }
 }

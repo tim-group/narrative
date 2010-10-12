@@ -1,8 +1,8 @@
 package com.youdevise.test.narrative;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import org.hamcrest.Matcher;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * A assertion of the final state of the system for a narrative
@@ -23,13 +23,9 @@ public class Then<T> {
             this.expected = expected;
             this.outer = outer;
         }
-
+        
         public TypedMatcher<D> should_be(Matcher<? super D> matcher) {
             return should(matcher);
-        }
-        
-        public TypedMatcher<D> shouldBe(Matcher<? super D> matcher) {
-            return should_be(matcher);
         }
 
         public TypedMatcher<D> should_have(Matcher<? super D> matcher) {
@@ -54,12 +50,8 @@ public class Then<T> {
         this.actor = actor;
     }
 
-    public <D> TypedMatcher<D> expectsThat(Extractor<D, T> expected) {
-        return new TypedMatcher<D>(expected, this);
-    }
-
     public <D> TypedMatcher<D> expects_that(Extractor<D, T> expected) {
-        return expectsThat(expected);
+        return new TypedMatcher<D>(expected, this);
     }
 
     public static <T> Then<T> the(Actor<T> actor) {

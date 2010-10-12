@@ -22,7 +22,7 @@ public class GivenTest {
             oneOf(actor).perform(action);
         }});
         
-        Given.the(actor).wasAbleTo(action);
+        Given.the(actor).was_able_to(action);
     }
     
     @SuppressWarnings("unchecked")
@@ -38,7 +38,7 @@ public class GivenTest {
             oneOf(actor).perform(otherAction); inSequence(orderOfActions);
         }});
         
-        Given.the(actor).wasAbleTo(action)
-                        .wasAbleTo(otherAction);
+        Given.the(actor).was_able_to(action)
+                        .was_able_to(otherAction);
     }
 }
