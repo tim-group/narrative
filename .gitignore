@@ -3,3 +3,4 @@
 /results
 /narrative-*.jar
 /target
+.gradle*
