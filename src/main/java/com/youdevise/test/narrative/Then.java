@@ -8,53 +8,53 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * A assertion of the final state of the system for a narrative
  * @param <T> The type of tool that the Actor uses
  */
-public class Then<T> {
-    private final Actor<T> actor;
+public class Then<TOOL, ACTOR extends Actor<TOOL>> {
+    private final ACTOR actor;
 
     /**
      * Type safe matching.
      * @param <D> The type of data that is going to be checked
      */
-    public class TypedMatcher<D> {
-        private final Extractor<D, T> expected;
-        private final Then<T> outer;
+    public class TypedMatcher<DATA> {
+        private final Extractor<DATA, ACTOR> expected;
+        private final Then<TOOL, ACTOR> outer;
 
-        public TypedMatcher(Extractor<D, T> expected, Then<T> outer) {
+        public TypedMatcher(Extractor<DATA, ACTOR> expected, Then<TOOL, ACTOR> outer) {
             this.expected = expected;
             this.outer = outer;
         }
         
-        public TypedMatcher<D> should_be(Matcher<? super D> matcher) {
+        public TypedMatcher<DATA> should_be(Matcher<? super DATA> matcher) {
             return should(matcher);
         }
 
-        public TypedMatcher<D> should_have(Matcher<? super D> matcher) {
+        public TypedMatcher<DATA> should_have(Matcher<? super DATA> matcher) {
             return should(matcher);
         }
 
-        public TypedMatcher<D> should(Matcher<? super D> matcher) {
+        public TypedMatcher<DATA> should(Matcher<? super DATA> matcher) {
             assertThat(actor.grabUsing(expected), matcher);
             return this;
         }
 
-        public Then<T> andAlso() {
+        public Then<TOOL, ACTOR> andAlso() {
             return outer;
         }
 
-        public <X> TypedMatcher<X> and_also_expects_that(Extractor<X, T> next_expected) {
+        public <EXTENDED> TypedMatcher<EXTENDED> and_also_expects_that(Extractor<EXTENDED, ACTOR> next_expected) {
             return outer.expects_that(next_expected);
         }
     }
 
-    private Then(Actor<T> actor) {
+    private Then(ACTOR actor) {
         this.actor = actor;
     }
 
-    public <D> TypedMatcher<D> expects_that(Extractor<D, T> expected) {
-        return new TypedMatcher<D>(expected, this);
+    public <DATA> TypedMatcher<DATA> expects_that(Extractor<DATA, ACTOR> expected) {
+        return new TypedMatcher<DATA>(expected, this);
     }
 
-    public static <T> Then<T> the(Actor<T> actor) {
-        return new Then<T>(actor);
+    public static <TOOL, ACTOR extends Actor<TOOL>> Then<TOOL, ACTOR> the(ACTOR actor) {
+        return new Then<TOOL, ACTOR>(actor);
     }
 }

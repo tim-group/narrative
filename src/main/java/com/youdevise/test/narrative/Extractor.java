@@ -5,6 +5,6 @@ package com.youdevise.test.narrative;
  * @param <T> The type of data that is going to be fetched.
  * @param <F> The type of the tool to use for fetching the data.
  */
-public interface Extractor<T, F> {
-    T grabFrom(F source, Stash stash);
+public interface Extractor<T, ACTOR extends Actor<?>> {
+    T grabFor(ACTOR actor);
 }

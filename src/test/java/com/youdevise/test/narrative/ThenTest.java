@@ -16,7 +16,7 @@ public class ThenTest {
     @Test public void
     grabsTheDataToCheckUsingTheActor() {
         final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, String> extractor = context.mock(Extractor.class); 
+        final Extractor<Character, Actor<String>> extractor = context.mock(Extractor.class); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(extractor); will(returnValue('a'));
@@ -29,7 +29,7 @@ public class ThenTest {
     @Test(expected=AssertionError.class) public void
     failsIfTheGrabbedDataDoesNotMatch() {
         final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, String> extractor = context.mock(Extractor.class); 
+        final Extractor<Character, Actor<String>> extractor = context.mock(Extractor.class); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(extractor); will(returnValue('b'));
@@ -42,8 +42,8 @@ public class ThenTest {
     @Test public void
     canAssertMoreThanOnePieceOfData() {
         final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, String> characterExtractor = context.mock(Extractor.class, "character extractor"); 
-        final Extractor<String, String> stringExtractor = context.mock(Extractor.class, "string extractor"); 
+        final Extractor<Character, Actor<String>> characterExtractor = context.mock(Extractor.class, "character extractor"); 
+        final Extractor<String, Actor<String>> stringExtractor = context.mock(Extractor.class, "string extractor"); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(characterExtractor); will(returnValue('a'));
@@ -58,8 +58,8 @@ public class ThenTest {
     @Test(expected=AssertionError.class) public void
     canPassOnAnEarlierAssertionAndFailOnALaterOne() {
         final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, String> characterExtractor = context.mock(Extractor.class, "character extractor"); 
-        final Extractor<String, String> stringExtractor = context.mock(Extractor.class, "string extractor"); 
+        final Extractor<Character, Actor<String>> characterExtractor = context.mock(Extractor.class, "character extractor"); 
+        final Extractor<String, Actor<String>> stringExtractor = context.mock(Extractor.class, "string extractor"); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(characterExtractor); will(returnValue('a'));
