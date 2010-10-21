@@ -20,6 +20,6 @@ We build using [Gradle](http://www.gradle.org/). But you don't need Gradle insta
 
 In the Narrative home directory, type `./gradlew` (on Linux and Mac) or `gradlew.bat` (on Windows). This will build, run tests, and put `Narrative.jar` in `build/libs`.
 
-## If you do have Gradle installed ##
+## If you do have Gradle installed, and in your path. ##
 
-Use `gradle :test` to build and run tests, and `gradle :jar` to produce `Narrative.jar` in `build/libs`.
+Use `gradle` to build, run tests, and produce the `Narrative.jar` in `build/libs`.
