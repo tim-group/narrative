@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @param <TOOL> The type of tool that the Actor uses
  * @param <ACTOR> The type of the Actor
  */
-public class Then<TOOL, ACTOR extends Actor<TOOL>> {
+public class Then<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
     private final ACTOR actor;
 
     /**
@@ -55,7 +55,7 @@ public class Then<TOOL, ACTOR extends Actor<TOOL>> {
         return new TypedMatcher<DATA>(expected, this);
     }
 
-    public static <TOOL, ACTOR extends Actor<TOOL>> Then<TOOL, ACTOR> the(ACTOR actor) {
+    public static <TOOL, ACTOR extends Actor<TOOL, ACTOR>> Then<TOOL, ACTOR> the(ACTOR actor) {
         return new Then<TOOL, ACTOR>(actor);
     }
 }

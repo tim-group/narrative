@@ -5,18 +5,18 @@ package com.youdevise.test.narrative;
  * @param <TOOL> The type of tool used by the Actor.
  * @param <ACTOR> The type of Actor.
  */
-public class Given<TOOL, ACTOR extends Actor<TOOL>> {
+public class Given<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
     private final ACTOR actor;
 
     private Given(ACTOR actor) {
         this.actor = actor;
     }
 
-    public static <T, A extends Actor<T>> Given<T, A> the(A actor) {
+    public static <T, A extends Actor<T, A>> Given<T, A> the(A actor) {
         return new Given<T, A>(actor);
     }
 
-    public <T, A extends Actor<T>> Given<T, A> and_the(A actor) {
+    public <T, A extends Actor<T, A>> Given<T, A> and_the(A actor) {
         return new Given<T, A>(actor);
     }
 

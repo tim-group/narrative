@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
 public class BasicArithmeticTest {
-    private Actor<Calculator> operator = new CalculatorActor();
+    private CalculatorActor operator = new CalculatorActor();
 
     @Test public void
     adds_two_numbers() {
@@ -32,31 +32,35 @@ public class BasicArithmeticTest {
         Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("2"));
     }
 
-    private static Action<Calculator> enter(final String entry) {
-        return new Action<Calculator>() {
-            public void performFor(Calculator calculator, Stash stash) {
-                calculator.enter(entry);
+    private static Action<Calculator, CalculatorActor> enter(final String entry) {
+        return new Action<Calculator, CalculatorActor>() {
+            public void performFor(CalculatorActor actor) {
+                actor.tool().enter(entry);
             }
         };
     }
 
-    private static Extractor<String, Calculator> the_displayed_value() {
-        return new Extractor<String, Calculator>() {
-            public String grabFrom(Calculator calculator, Stash stash) {
-                return calculator.read();
+    private static Extractor<String, CalculatorActor> the_displayed_value() {
+        return new Extractor<String, CalculatorActor>() {
+            public String grabFor(CalculatorActor actor) {
+                return actor.tool().read();
             }
         };
     }
 
-    private static class CalculatorActor implements Actor<Calculator> {
+    private static class CalculatorActor implements Actor<Calculator, CalculatorActor> {
         private Calculator calculator = new Calculator();
 
-        public void perform(Action<Calculator> action) {
-            action.performFor(calculator, new HashMapStash());
+        public Calculator tool() {
+            return calculator;
         }
 
-        public <DATA> DATA grabUsing(Extractor<DATA, Calculator> extractor) {
-                return extractor.grabFrom(calculator, new HashMapStash());
+        public void perform(Action<Calculator, CalculatorActor> action) {
+            action.performFor(this);
+        }
+
+        public <DATA> DATA grabUsing(Extractor<DATA, CalculatorActor> extractor) {
+                return extractor.grabFor(this);
         }
     }
 }
