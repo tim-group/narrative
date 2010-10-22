@@ -2,8 +2,10 @@ apply plugin: 'java'
  
 repositories {  
     mavenCentral()
+    flatDir dirs: '../../build/libs'
 }
 
 dependencies {
+    testCompile                          name: 'narrative',       version: "+"
     testCompile  group: "junit",         name: 'junit-dep',       version: "4.+"
 }
