@@ -8,7 +8,7 @@ Download [Narrative.jar](http://github.com/downloads/youdevise/narrative/Narrati
 
 # Usage #
 
-*we will add an example here*
+*we will add a helpful example here*
 
 For more examples, see the examples directory.
 
