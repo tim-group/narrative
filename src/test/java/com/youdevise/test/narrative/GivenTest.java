@@ -16,7 +16,7 @@ public class GivenTest {
     @Test public void
     usesTheActorToPerformTheAction() {
         final Actor<String> actor = context.mock(Actor.class);
-        final Action<Actor<String>> action = context.mock(Action.class);
+        final Action<String, Actor<String>> action = context.mock(Action.class);
         
         context.checking(new Expectations() {{
             oneOf(actor).perform(action);
@@ -29,8 +29,8 @@ public class GivenTest {
     @Test public void
     canPerformanManyActionsInARow() {
         final Actor<String> actor = context.mock(Actor.class);
-        final Action<Actor<String>> action = context.mock(Action.class, "first action");
-        final Action<Actor<String>> otherAction = context.mock(Action.class, "second action");
+        final Action<String, Actor<String>> action = context.mock(Action.class, "first action");
+        final Action<String, Actor<String>> otherAction = context.mock(Action.class, "second action");
         
         final Sequence orderOfActions = context.sequence("Order of the actions");
         context.checking(new Expectations() {{

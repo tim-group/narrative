@@ -7,6 +7,6 @@ package com.youdevise.test.narrative;
 public interface Actor<TYPE> {
 	TYPE tool();
 	
-    void perform(Action<? extends Actor<TYPE>> action);
+    void perform(Action<TYPE, ? extends Actor<TYPE>> action);
     <D> D grabUsing(Extractor<D, ? extends Actor<TYPE>> extractor);
 }

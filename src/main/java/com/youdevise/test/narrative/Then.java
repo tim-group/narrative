@@ -6,7 +6,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * A assertion of the final state of the system for a narrative
- * @param <T> The type of tool that the Actor uses
+ * @param <TOOL> The type of tool that the Actor uses
+ * @param <ACTOR> The type of the Actor
  */
 public class Then<TOOL, ACTOR extends Actor<TOOL>> {
     private final ACTOR actor;

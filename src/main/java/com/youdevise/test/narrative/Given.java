@@ -2,7 +2,8 @@ package com.youdevise.test.narrative;
 
 /**
  * Declaration of the initial state that the system should be in.
- * @param <T> The type of tool used by the Actor.
+ * @param <TOOL> The type of tool used by the Actor.
+ * @param <ACTOR> The type of Actor.
  */
 public class Given<TOOL, ACTOR extends Actor<TOOL>> {
     private final ACTOR actor;
@@ -19,7 +20,7 @@ public class Given<TOOL, ACTOR extends Actor<TOOL>> {
         return new Given<T, A>(actor);
     }
 
-    public Given<TOOL, ACTOR> was_able_to(Action<ACTOR> action) {
+    public Given<TOOL, ACTOR> was_able_to(Action<TOOL, ACTOR> action) {
         actor.perform(action);
         return this;
     }

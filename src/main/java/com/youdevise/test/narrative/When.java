@@ -2,7 +2,8 @@ package com.youdevise.test.narrative;
 
 /**
  * Action declaration of what the Actor does to achieve the final desired result, which is then checked with a Then statement.
- * @param <T> The type of the tool the Actor uses
+ * @param <TOOL> The type of the tool the Actor uses
+ * @param <ACTOR> The type of the Actor
  */
 public class When<TOOL, ACTOR extends Actor<TOOL>> {
     private final ACTOR actor;
@@ -19,7 +20,7 @@ public class When<TOOL, ACTOR extends Actor<TOOL>> {
         return new When<T, A>(actor);
     }
 
-    public When<TOOL, ACTOR> attempts_to(Action<ACTOR> action) {
+    public When<TOOL, ACTOR> attempts_to(Action<TOOL, ACTOR> action) {
         actor.perform(action);
         return this;
     }
