@@ -8,4 +8,5 @@ repositories {
 dependencies {
     testCompile                          name: 'narrative',       version: "+"
     testCompile  group: "junit",         name: 'junit-dep',       version: "4.+"
+    testCompile  group: 'org.hamcrest',  name: 'hamcrest-integration',    version: '1.2'
 }
