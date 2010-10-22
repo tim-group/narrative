@@ -1,0 +1,9 @@
+apply plugin: 'java'
+ 
+repositories {  
+    mavenCentral()
+}
+
+dependencies {
+    testCompile  group: "junit",         name: 'junit-dep',       version: "4.+"
+}
