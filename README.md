@@ -4,13 +4,29 @@ A framework for building behaviour-driven tests in fluent Java. Copyright 2010 [
 
 # Installation #
 
-Download [Narrative.jar](http://github.com/downloads/youdevise/narrative/Narrative.jar) and put it in your classpath where your test code can see it.
+Download [the Narrative jar file](http://github.com/downloads/youdevise/narrative/narrative-0.8.jar) and put it in your classpath where your test code can see it.
 
 # Usage #
 
-*we will add a helpful example here*
+Here's a typical Narrative test (the object under test is a very simple calculator):
 
-For more examples, see the examples directory.
+    @Test public void
+    adds_two_numbers() {
+        Given.the( operator).was_able_to( press('2'))
+                            .was_able_to( press('+'))
+                            .was_able_to( press('2'));
+
+        When.the( operator).attempts_to( press('='));
+
+        Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("4"));
+    }
+
+To make this test work, you need to define:
+
+1. `operator`, an `Actor` which manipulates the calculator
+2. `press()` and `the_displayed_value()`, which tell the `operator` to perform actions on the calculator
+
+You can see these implementations in [our most basic example](http://github.com/youdevise/narrative/blob/master/examples/example_1/src/test/java/BasicArithmeticTest.java). We plan to add more examples in the `examples` directory of the source code.
 
 # Building from source #
 
