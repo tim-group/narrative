@@ -12,30 +12,30 @@ public class BasicArithmeticTest {
 
     @Test public void
     adds_two_numbers() {
-        Given.the( operator).was_able_to( enter("2"))
-                           .was_able_to( enter("+"))
-                           .was_able_to( enter("2"));
+        Given.the( operator).was_able_to( press('2'))
+                            .was_able_to( press('+'))
+                            .was_able_to( press('2'));
 
-        When.the( operator).attempts_to( enter("="));
+        When.the( operator).attempts_to( press('='));
 
         Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("4"));
     }
 
     @Test public void
     subtracts_two_numbers() {
-        Given.the( operator).was_able_to( enter("3"))
-                           .was_able_to( enter("-"))
-                           .was_able_to( enter("1"));
+        Given.the( operator).was_able_to( press('3'))
+                            .was_able_to( press('-'))
+                            .was_able_to( press('1'));
 
-        When.the( operator).attempts_to( enter("="));
+        When.the( operator).attempts_to( press('='));
 
         Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("2"));
     }
 
-    private static Action<Calculator> enter(final String entry) {
+    private static Action<Calculator> press(final char keypress) {
         return new Action<Calculator>() {
             public void performFor(Calculator calculator, Stash stash) {
-                calculator.enter(entry);
+                calculator.press(keypress);
             }
         };
     }
@@ -56,7 +56,7 @@ public class BasicArithmeticTest {
         }
 
         public <DATA> DATA grabUsing(Extractor<DATA, Calculator> extractor) {
-                return extractor.grabFrom(calculator, new HashMapStash());
+            return extractor.grabFrom(calculator, new HashMapStash());
         }
     }
 }
