@@ -8,7 +8,7 @@ Download [the Narrative jar file](http://github.com/downloads/youdevise/narrativ
 
 # Usage #
 
-Here's a typical Narrative test (the object under test is a very simple calculator):
+Here is a typical Narrative test (the object under test is a very simple calculator):
 
     @Test public void
     adds_two_numbers() {
