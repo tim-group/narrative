@@ -39,3 +39,9 @@ In the Narrative home directory, type `./gradlew` (on Linux and Mac) or `gradlew
 ## If you do have Gradle installed, and in your path ##
 
 Use `gradle` to build, run tests, and produce the `Narrative.jar` in `build/libs`.
+
+## Acknowledgements ##
+
+A project of [youDevise](https://dev.youdevise.com). We're [hiring](http://www.youdevise.com/careers)!
+
+Inspired by [JNarrate](http://JNarrate.org), a [RiverGlide](http://www.riverglide.com) idea.
