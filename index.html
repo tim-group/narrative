@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Narrative, a framework for building behaviour-driven tests in fluent Java</title>
+    <link rel="stylesheet" type="text/css" href="narrative.css">
   </head>
   <body>
     <h1>Narrative</h1>
@@ -13,7 +14,7 @@
 adds_two_numbers() {
     Given.the( operator).was_able_to( press('2'))
                         .was_able_to( press('+'))
-                        .was_able_to( press('2'));
+                        .was_able_to( press('2'));s
 
     When.the( operator).attempts_to( press('='));
 
@@ -29,7 +30,7 @@ adds_two_numbers() {
 
     <h2>Resources</h2>
     <ul>
-      <li style="font-size:larger; font-weight: bold;"><a href="http://github.com/downloads/youdevise/narrative/narrative-0.8.jar">Download Narrative</a></li>
+      <li class="button"><a href="http://github.com/downloads/youdevise/narrative/narrative-0.8.jar">Download Narrative</a></li>
       <li>Get started with <a href="http://github.com/youdevise/narrative/blob/master/README.md">quickstart instructions</a> from the README</li>
       <li>Check out some <a href="http://github.com/youdevise/narrative/tree/master/examples">examples</a></li>
       <li>Get the <a href="http://github.com/youdevise/narrative">Narrative source code</a></li>
