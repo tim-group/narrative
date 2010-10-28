@@ -40,11 +40,11 @@ In the Narrative home directory, type `./gradlew` (on Linux and Mac) or `gradlew
 
 Use `gradle` to build, run tests, and produce the `Narrative.jar` in `build/libs`.
 
-## License ##
+# License #
 
 Open source under the very permissive [MIT license](http://github.com/youdevise/narrative/blob/master/LICENSE).
 
-## Acknowledgements ##
+# Acknowledgements #
 
 A project of [youDevise](https://dev.youdevise.com). We're [hiring](http://www.youdevise.com/careers)!
 
