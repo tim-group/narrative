@@ -15,8 +15,8 @@ public class WhenTest {
     @SuppressWarnings("unchecked")
     @Test public void
     usesTheActorToPerformTheAction() {
-        final Actor<String> actor = context.mock(Actor.class);
-        final Action<String, Actor<String>> action = context.mock(Action.class);
+        final StringActor actor = context.mock(StringActor.class);
+        final Action<String, StringActor> action = context.mock(Action.class);
         
         context.checking(new Expectations() {{
             oneOf(actor).perform(action);
@@ -28,9 +28,9 @@ public class WhenTest {
     @SuppressWarnings("unchecked")
     @Test public void
     canPerformanManyActionsInARow() {
-        final Actor<String> actor = context.mock(Actor.class);
-        final Action<String, Actor<String>> action = context.mock(Action.class, "action");
-        final Action<String, Actor<String>> otherAction = context.mock(Action.class, "other action");
+        final StringActor actor = context.mock(StringActor.class);
+        final Action<String, StringActor> action = context.mock(Action.class, "action");
+        final Action<String, StringActor> otherAction = context.mock(Action.class, "other action");
         
         final Sequence orderOfActions = context.sequence("Order of the actions");
         context.checking(new Expectations() {{

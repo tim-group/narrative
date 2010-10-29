@@ -15,8 +15,8 @@ public class ThenTest {
     @SuppressWarnings("unchecked")
     @Test public void
     grabsTheDataToCheckUsingTheActor() {
-        final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, Actor<String>> extractor = context.mock(Extractor.class); 
+        final StringActor actor = context.mock(StringActor.class);
+        final Extractor<Character, StringActor> extractor = context.mock(Extractor.class); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(extractor); will(returnValue('a'));
@@ -28,8 +28,8 @@ public class ThenTest {
     @SuppressWarnings("unchecked")
     @Test(expected=AssertionError.class) public void
     failsIfTheGrabbedDataDoesNotMatch() {
-        final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, Actor<String>> extractor = context.mock(Extractor.class); 
+        final StringActor actor = context.mock(StringActor.class);
+        final Extractor<Character, StringActor> extractor = context.mock(Extractor.class); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(extractor); will(returnValue('b'));
@@ -41,9 +41,9 @@ public class ThenTest {
     @SuppressWarnings("unchecked")
     @Test public void
     canAssertMoreThanOnePieceOfData() {
-        final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, Actor<String>> characterExtractor = context.mock(Extractor.class, "character extractor"); 
-        final Extractor<String, Actor<String>> stringExtractor = context.mock(Extractor.class, "string extractor"); 
+        final StringActor actor = context.mock(StringActor.class);
+        final Extractor<Character, StringActor> characterExtractor = context.mock(Extractor.class, "character extractor"); 
+        final Extractor<String, StringActor> stringExtractor = context.mock(Extractor.class, "string extractor"); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(characterExtractor); will(returnValue('a'));
@@ -57,9 +57,9 @@ public class ThenTest {
     @SuppressWarnings("unchecked")
     @Test(expected=AssertionError.class) public void
     canPassOnAnEarlierAssertionAndFailOnALaterOne() {
-        final Actor<String> actor = context.mock(Actor.class);
-        final Extractor<Character, Actor<String>> characterExtractor = context.mock(Extractor.class, "character extractor"); 
-        final Extractor<String, Actor<String>> stringExtractor = context.mock(Extractor.class, "string extractor"); 
+        final StringActor actor = context.mock(StringActor.class);
+        final Extractor<Character, StringActor> characterExtractor = context.mock(Extractor.class, "character extractor"); 
+        final Extractor<String, StringActor> stringExtractor = context.mock(Extractor.class, "string extractor"); 
         
         context.checking(new Expectations() {{
             oneOf(actor).grabUsing(characterExtractor); will(returnValue('a'));
