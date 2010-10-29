@@ -3,7 +3,7 @@ apply plugin: 'java'
 defaultTasks 'clean', 'test', 'jar'
 
 group = "com.youdevise"
-version = '0.8'
+version = '0.9'
     
 repositories {  
     mavenCentral()
