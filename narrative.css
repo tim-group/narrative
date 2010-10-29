@@ -1,1 +1,77 @@
-.button {font-size:larger; font-weight: bold;}
+body {
+  background: #111;
+  color: #ccc;
+  font-family: 'Cantarell', arial, serif;
+  font-size: 16px;
+}
+a {
+  color: #aaddff;
+}
+.heading {
+  background-color: #2c1d4c;
+  position: relative;
+  /*
+  background-image: url(bubbles.png);
+  background-repeat: no-repeat;
+  background-position: 0px 0px; 
+  */
+  margin-bottom: 50px;
+  height: 110px;
+  border-bottom: 2px solid #ccc;
+}
+#bubbles {
+  position: absolute;
+  top: 0px;
+  left: 80px;
+}
+h1 {
+  font-size: 80px;
+  position: absolute;
+  top: 10px;
+  left: 320px;
+}
+h4 {
+  position: absolute;
+  top: 112px;
+  left: 380px;
+}
+
+.body {
+ padding: 0px 200px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-left: -10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.button {
+  list-style: none;
+}
+.button a {
+  display: block;
+}
+
+h3 {
+ margin-left: 5px; 
+ display: block;
+ clear:both;
+}
+div.code {
+  border: 1px dotted #333;
+  padding: 10px;
+  white-space: pre;
+  float: left;
+}
+code, div.code {
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+li {
+  list-style: inside disc;
+  margin-left: 5px;
+}

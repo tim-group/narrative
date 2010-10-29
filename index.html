@@ -2,25 +2,37 @@
 <html>
   <head>
     <title>Narrative, a framework for building behaviour-driven tests in fluent Java</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.1/build/reset/reset-min.css"> 
+    <link href='http://fonts.googleapis.com/css?family=Cantarell&subset=latin' rel='stylesheet' type='text/css'>
+
+		<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+		<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+		<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
+
     <link rel="stylesheet" type="text/css" href="narrative.css">
+
   </head>
   <body>
+   <div class="heading">
+    <img src="bubbles.png" id="bubbles"/>
     <h1>Narrative</h1>
-    <h2>A framework for building behaviour-driven tests in fluent Java</h2>
+    <h4>A framework for building behaviour-driven tests in fluent Java</h4>
+   </div>
+   <div class="body">
     <p>Narrative gives you the tools to write <em>readable</em> <a href="http://behaviour-driven.org/">behaviour-driven tests</a> in Java, like this:</p>
 
     <h3>1. Describe the desired behaviour in fluent Java:</h3>
-<pre><code>@Test public void
+<div class="code">@Test public void
 adds_two_numbers() {
     Given.the( operator).was_able_to( press('2'))
                         .was_able_to( press('+'))
-                        .was_able_to( press('2'));s
+                        .was_able_to( press('2'));
 
     When.the( operator).attempts_to( press('='));
 
     Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("4"));
 }
-</code></pre>
+</div>
 
     <h3>2. Define one or more <code>Actor</code>s and actions for those <code>Actor</code>s to carry out, making your test code compile</h3>
     <h3>3. Run your test and watch it fail</h3> 
@@ -30,7 +42,7 @@ adds_two_numbers() {
 
     <h2>Resources</h2>
     <ul>
-      <li class="button"><a href="http://github.com/downloads/youdevise/narrative/narrative-0.8.jar">Download Narrative</a></li>
+      <li class="button"><a href="http://github.com/downloads/youdevise/narrative/narrative-0.8.jar"><img alt="download narrative" src="download-button.png"/></a></li>
       <li>Get started with <a href="http://github.com/youdevise/narrative/blob/master/README.md">quickstart instructions</a> from the README</li>
       <li>Check out some <a href="http://github.com/youdevise/narrative/tree/master/examples">examples</a></li>
       <li>Get the <a href="http://github.com/youdevise/narrative">Narrative source code</a></li>
@@ -57,5 +69,6 @@ adds_two_numbers() {
       <p>A project of <a href="https://dev.youdevise.com">youDevise</a>. We're <a href="http://www.youdevise.com/careers">hiring</a>!</p>
 
       <p>Inspired by <a href="http://JNarrate.org">JNarrate</a>, a <a href="http://www.riverglide.com">RiverGlide</a> idea.</p>
+   </div>
   </body>
 </html>
