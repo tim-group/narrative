@@ -10,11 +10,6 @@ a {
 .heading {
   background-color: #2c1d4c;
   position: relative;
-  /*
-  background-image: url(bubbles.png);
-  background-repeat: no-repeat;
-  background-position: 0px 0px; 
-  */
   margin-bottom: 50px;
   height: 110px;
   border-bottom: 2px solid #ccc;
@@ -74,4 +69,12 @@ code, div.code {
 li {
   list-style: inside disc;
   margin-left: 5px;
+}
+
+li ul li {
+  margin-left: 50px;
+}
+
+strong {
+  font-style: italic;
 }
