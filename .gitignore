@@ -3,4 +3,6 @@
 /results
 /narrative-*.jar
 /target
+/scriptwriter/build
+/scriptwriter/dist
 .gradle*

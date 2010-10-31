@@ -1,0 +1,128 @@
+<!--
+ Copyright 2007-2008 Sun Microsystems, Inc.  All Rights Reserved.
+ DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+
+ This code is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License version 2 only, as
+ published by the Free Software Foundation.  Sun designates this
+ particular file as subject to the "Classpath" exception as provided
+ by Sun in the LICENSE file that accompanied this code.
+
+ This code is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ version 2 for more details (a copy is included in the LICENSE file that
+ accompanied this code).
+
+ You should have received a copy of the GNU General Public License version
+ 2 along with this work; if not, write to the Free Software Foundation,
+ Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+
+ Please contact Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+ CA 95054 USA or visit www.sun.com if you need additional information or
+ have any questions.
+-->
+<project name="treetool" default="dist" basedir=".">
+  <property name="build.dir" location="build"/>
+  <property name="build.classes.dir" location="${build.dir}/classes"/>
+  <property name="build.gensrc.dir" location="${build.dir}/gensrc"/>
+  <property name="src.dir" location="src"/>
+  <property name="dist.dir" location="dist"/>
+
+  <property name="antlr.jar" location="lib/antlr-3.1.1.jar"/>
+  <path id="antlr.classpath">
+    <pathelement location="${antlr.jar}"/>
+  </path>
+  <property name="antlr.classpath" refid="antlr.classpath"/>
+
+
+  <patternset id="antlr.runtime">
+    <include name="org/antlr/runtime/**"/>
+  </patternset>
+
+  <target name="javag">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${build.classes.dir}"/>
+    <mkdir dir="${build.gensrc.dir}"/>
+    <mkdir dir="${dist.dir}"/>
+
+    <java classname="org.antlr.Tool">
+      <classpath refid="antlr.classpath"/>
+      <arg value="-o"/>
+      <arg file="${build.gensrc.dir}"/>
+      <arg line="-Xmaxinlinedfastates 1000"/>
+      <arg line="-Xconversiontimeout  1000000"/>
+      <arg file="${src.dir}/ANTLRv3.g"/>
+    </java>  
+
+    <javac fork="true"
+	   srcdir="${build.gensrc.dir}"
+	   includes="ANTLRv3*.java"
+	   classpath="${antlr.classpath}"
+	   destdir="${build.classes.dir}"
+	   />
+    
+    <javac fork="true"
+	   srcdir="${src.dir}"
+	   includes="GrammarTransformer.java"
+	   classpath="${antlr.classpath};${build.classes.dir}"
+	   destdir="${build.classes.dir}"
+	   />
+    
+    <java classname="GrammarTransformer">
+          <classpath refid="antlr.classpath"/>
+	  <classpath location="${build.classes.dir}"/>
+	  <arg value="${src.dir}/Java.g"/>
+	  <arg value="${build.gensrc.dir}/Java.g"/>
+    </java>
+  </target>
+
+  <target name="tree" depends="javag">
+    <java classname="org.antlr.Tool">
+      <classpath refid="antlr.classpath"/>
+      <arg value="-o"/>
+      <arg file="${build.gensrc.dir}"/>
+      <arg line="-Xmaxinlinedfastates 1000"/>
+      <arg line="-Xconversiontimeout  1000000"/>
+      <arg file="${build.gensrc.dir}/Java.g"/>
+    </java>  
+
+    <javac fork="true"
+	   srcdir="${src.dir};${build.gensrc.dir}"
+	   classpath="${antlr.classpath};${build.classes.dir}"
+	   destdir="${build.classes.dir}"
+	   />
+  </target>
+
+  <target name="install-antlr-runtime">
+    <unzip src="${antlr.jar}" dest="${build.classes.dir}">
+        <patternset refid="antlr.runtime"/>
+    </unzip>
+  </target>
+
+
+  <target name="dist" depends="tree, install-antlr-runtime">
+     <jar file="${dist.dir}/tree.jar" basedir="${build.classes.dir}">
+	<manifest>    
+             <attribute name="Main-Class" value="TreeBuilder"/>
+        </manifest>
+     </jar>
+  </target>
+
+  <target name="test" depends="dist">
+    <echo level="info">Trying to parse file Test.java.</echo>
+    <java classname="TreeBuilder" fork="true" >
+          <classpath>
+	    <pathelement location="${dist.dir}/tree.jar"/>
+	  </classpath>
+      <arg file="Test.java"/>
+    </java>  
+  </target>
+
+  <target name="clean" description="Delete all generated files">
+     <delete dir="${build.dir}"/>
+  	 <delete dir="${dist.dir}"/>
+  </target>
+</project>
+  
+    
