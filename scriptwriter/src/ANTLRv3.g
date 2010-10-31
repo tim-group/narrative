@@ -237,7 +237,7 @@ atom:   range ( ( '^'| '!') | )
             String content =
             "{T.pushTop();T.setCurrentParent(T.addNode(\""+$RULE_REF.text+"\"));} "+
             tagName + "=" +$RULE_REF.text+" "+
-            "{T.popTop().setTextRange(\$"+tagName+".start, \$"+tagName+".stop);}";
+            "{T.popTop();}";
             ((TokenRewriteStream) input).replace($RULE_REF.getTokenIndex(), $RULE_REF.getTokenIndex(), new StringTemplate(templateLib, content));
            }                
         ( ARG_ACTION )? ( ( '^'| '!') )?

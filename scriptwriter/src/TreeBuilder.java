@@ -23,33 +23,12 @@
  * have any questions.
  */
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
-
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
-import javax.swing.JTree;
-import javax.swing.KeyStroke;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeSelectionModel;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonToken;
@@ -62,91 +41,50 @@ import org.antlr.runtime.TokenRewriteStream;
  * @author Yang Jiang (yang.jiang.z@gmail.com)
  *
  */
-public class TreeBuilder extends JPanel implements MouseListener, ActionListener {
-
+public class TreeBuilder {
     private static final long serialVersionUID = 1L;
-    private JTree tree;
-    private JPopupMenu popup;
-    private JTextPane editor;
-    private JMenuBar menuBar;
-    private JFileChooser fileChooser;
     
     Stack<TreeNode> stacks = new Stack<TreeNode>();
     String sourceFile;
-    String fileCotent;
+    String fileContent;
+    TreeNode root;
     TreeNode currentParent;
     
-
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Source File Tree Viewer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        TreeBuilder treeBuilder = new TreeBuilder(args[0]);
+        treeBuilder.visit();
+    }
 
-        TreeBuilder treeBuilder = new TreeBuilder();
-        //Add content to the window.
-        frame.add(treeBuilder);
-        frame.setJMenuBar(treeBuilder.menuBar);
-        if (args.length != 0) {
-            treeBuilder.showFile(args[0]);
+    public TreeBuilder(String file) {
+        loadFile(file);
+        buildTree();
+    }
+
+    public void visit() {
+        visit(root);
+    }
+
+    public void visit(TreeNode node) {
+        for (TreeNode child : node.children) {
+            if (child.isTestMethod()) {
+                print(child);
+            } else {
+                visit(child);
+            }
         }
-
-        //Display the window.
-        frame.pack();
-        frame.setSize(800, 500);
-        frame.setVisible(true);
-        // tree.addTreeSelectionListener(this);
-
     }
 
-    public TreeBuilder() {
-        super(new GridLayout(1, 0));
-
-        // left, tree
-        createTree();
-
-        JScrollPane treeView = new JScrollPane(tree);
-        treeView.setMinimumSize(new Dimension(400, 200));
-
-        // right, editor
-        editor = new JTextPane();
-        editor.setEditable(false);
-        JScrollPane editorView = new JScrollPane(editor);
-        editorView.setMinimumSize(new Dimension(350, 200));
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(treeView);
-        splitPane.setRightComponent(editorView);
-        add(splitPane);
-        createMenu();
-        fileChooser = new JFileChooser();
-    }
-
-    private void createTree() {
-        tree = new JTree(new DefaultMutableTreeNode("Choose a java source file."));
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        popup = new JPopupMenu();
-        JMenuItem mi = new JMenuItem("Expand all children");
-        mi.addActionListener(this);
-        mi.setActionCommand("expand");
-        popup.add(mi);
-
-        mi = new JMenuItem("Collapse all children");
-        mi.addActionListener(this);
-        mi.setActionCommand("collapse");
-        popup.add(mi);
-        popup.setOpaque(true);
-        popup.setLightWeightPopupEnabled(true);
-        tree.addMouseListener(this);
-    }
-
-    private void createMenu() {
-        menuBar = new JMenuBar();
-        JMenu menu = new JMenu("File");
-        menuBar.add(menu);
-        JMenuItem menuItem = new JMenuItem("Open File", KeyEvent.VK_O);
-        menuItem.setActionCommand("openfile");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        menu.add(menuItem);
+    public void print(TreeNode node) {
+        String name = node.toString();
+        if (name.startsWith("IDENTIFIER")    || 
+            name.startsWith("STRINGLITERAL") || 
+            name.startsWith("CHARLITERAL")) 
+        { 
+            System.out.println(name); 
+        }
+        for (TreeNode child : node.children) {
+            print(child);
+        }
     }
 
     /**
@@ -172,15 +110,7 @@ public class TreeBuilder extends JPanel implements MouseListener, ActionListener
      * @return
      */
     public TreeNode addNode(String name, Token start, Token stop) {
-        int startIndex = -1, stopIndex = -1;
-        if (start != null) {
-            startIndex = ((CommonToken) start).getStartIndex();
-        }
-        if (stop != null) {
-            stopIndex = ((CommonToken) stop).getStopIndex();
-        }
-
-        TreeNode node = new TreeNode(name, new TextRange(startIndex, stopIndex));
+        TreeNode node = new TreeNode(name);
         if (currentParent != null)
             currentParent.add(node);
         node.setLeaf(false);
@@ -202,8 +132,7 @@ public class TreeBuilder extends JPanel implements MouseListener, ActionListener
      * @return
      */
     public TreeNode addLeaf(String name, Token token) {
-        TreeNode node = new TreeNode(name, new TextRange(((CommonToken) token).getStartIndex(), ((CommonToken) token)
-                .getStopIndex()));
+        TreeNode node = new TreeNode(name);
         node.setLeaf(true);
         if (currentParent != null)
             currentParent.add(node);
@@ -226,17 +155,10 @@ public class TreeBuilder extends JPanel implements MouseListener, ActionListener
         return ret;
     }
 
-    public void showFile(String file) {
-        loadFile(file);
-        editor.setText(fileCotent);
-        buildTree();
-        this.revalidate();
-    }
-
     private void loadFile(String file) {
         FileInputStream in = null;
         this.sourceFile = file;
-        fileCotent = null;
+        fileContent = null;
         try {
             in = new FileInputStream(file);
             byte[] buf = new byte[10240];
@@ -246,9 +168,9 @@ public class TreeBuilder extends JPanel implements MouseListener, ActionListener
                 sbuf.append(new String(buf, 0, len));
                 len = in.read(buf);
             }
-            fileCotent = sbuf.toString();
+            fileContent = sbuf.toString();
         } catch (Exception e) {
-            fileCotent = null;
+            fileContent = null;
         } finally {
             try {
                 in.close();
@@ -259,108 +181,36 @@ public class TreeBuilder extends JPanel implements MouseListener, ActionListener
     }
 
     private void buildTree() {
-        TreeNode root = new TreeNode("compilationUnit [" + sourceFile + "]", new TextRange(0, fileCotent.length() - 1));
+        root = new TreeNode("compilationUnit [" + sourceFile + "]");
         try {
-            JavaLexer lex = new JavaLexer(new ANTLRStringStream(fileCotent));
+            JavaLexer lex = new JavaLexer(new ANTLRStringStream(fileContent));
             TokenRewriteStream tokens = new TokenRewriteStream(lex);
             JavaParser g = new JavaParser(tokens);
             g.setTreeBuilder(this);
             this.setCurrentParent(root);
             g.compilationUnit();                        
             if (g.getNumberOfSyntaxErrors() != 0) {
-                root = new TreeNode("There are syntax error in input file. [source:" + sourceFile + "]", new TextRange(
-                        -1, -1));
+                throw new IllegalStateException("There are syntax errors in the input file. [source:" + sourceFile + "]");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            root = new TreeNode("There are syntax error in input file. [source:" + sourceFile + "]", new TextRange(-1,
-                    -1));
-        }
-
-        ((DefaultTreeModel) tree.getModel()).setRoot(root);
-        tree.expandRow(0);
-    }
-
-    public void mouseClicked(MouseEvent e) {
-        if (tree.getLastSelectedPathComponent() instanceof TreeNode) {
-            TreeNode node = (TreeNode) tree.getLastSelectedPathComponent();
-            if (node.getTextRange().start != -1 && node.getTextRange().end != -1) {
-                // select the corresponding range in the editor
-                editor.select(node.getTextRange().start, node.getTextRange().end + 1);
-                editor.grabFocus();
-            }
-        }
-    }
-
-    
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    
-    public void mouseExited(MouseEvent e) {
-    }
-
-    
-    public void mousePressed(MouseEvent e) {
-        if (e.isPopupTrigger() && tree.getLastSelectedPathComponent() != null) {
-            popup.show((JComponent) e.getSource(), e.getX(), e.getY());
-        }
-    }
-
-    
-    public void mouseReleased(MouseEvent e) {
-        if (e.isPopupTrigger() && tree.getLastSelectedPathComponent() != null) {
-            popup.show((JComponent) e.getSource(), e.getX(), e.getY());
-        }
-    }
-
-    
-    public void actionPerformed(ActionEvent e) {
-        String cmd = e.getActionCommand();
-        if ("expand".equals(cmd) || "collapse".equals(cmd)) {
-            TreeNode node = (TreeNode) tree.getLastSelectedPathComponent();
-            if (node == null) {
-                return;
-            }
-            int row = -1;
-            if (tree.getSelectionRows() != null) {
-                row = tree.getSelectionRows()[0];
-            }
-            if (row == -1) {
-                return;
-            }
-
-            if ("expand".equals(cmd)) {
-                for (int i = row; i < tree.getRowCount(); i++) {
-                    tree.expandRow(i);
-                }
-            } else if ("collapse".equals(cmd)) {
-                for (int i = tree.getRowCount() - 1; i >= row; i--) {
-                    tree.collapseRow(i);
-                }
-            }
-        } else if ("openfile".equals(cmd)) {
-            int returnVal = fileChooser.showOpenDialog(this);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                this.showFile(file.getAbsolutePath());
-            }
+            throw new IllegalStateException("There are syntax errors in input file. [source:" + sourceFile + "]");
         }
     }
 }
 
-class TreeNode extends DefaultMutableTreeNode {
+class TreeNode {
     private static final long serialVersionUID = 1L;
-    TextRange range;
+    String text;
     private boolean isLeaf = false;
+    List<TreeNode> children = new ArrayList<TreeNode>();
 
-    public TreeNode(Object obj, TextRange range) {
-        super(obj);
-        this.range = range;
+    public TreeNode(String text) {
+        this.text = text;
     }
 
-    public TreeNode(Object obj) {
-        super(obj);
+    public void add(TreeNode node) {
+        children.add(node);
     }
 
     public void setLeaf(boolean isLeaf) {
@@ -371,34 +221,9 @@ class TreeNode extends DefaultMutableTreeNode {
         return isLeaf;
     }
 
-    /**
-     * TODO: change this
-     * @param start
-     * @param stop
-     */
-    public void setTextRange(Token start, Token stop) {
-        int startIndex = -1, stopIndex = -1;
-        if (start != null) {
-            startIndex = ((CommonToken) start).getStartIndex();
-        }
-        if (stop != null) {
-            stopIndex = ((CommonToken) stop).getStopIndex();
-        }
-
-        this.range = new TextRange(startIndex, stopIndex);
+    public boolean isTestMethod() {
+        return (text.equals("methodDeclaration"));
     }
-
-    public TextRange getTextRange() {
-        return range;
-    }
-}
-
-class TextRange {
-    public int start;
-    public int end;
-
-    public TextRange(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
+    
+    public String toString() { return text; }
 }
