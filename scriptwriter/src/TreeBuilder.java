@@ -67,23 +67,25 @@ public class TreeBuilder {
     public void visit(TreeNode node) {
         for (TreeNode child : node.children) {
             if (child.isTestMethod()) {
-                print(child);
+                print(child, 0);
             } else {
                 visit(child);
             }
         }
     }
 
-    public void print(TreeNode node) {
+    public void print(TreeNode node, int level) {
         String name = node.toString();
         if (name.startsWith("IDENTIFIER")    || 
             name.startsWith("STRINGLITERAL") || 
             name.startsWith("CHARLITERAL")) 
         { 
+            /*for (int i=0; i<level*2; i++) { System.out.print(" "); }*/
             System.out.println(name); 
         }
         for (TreeNode child : node.children) {
-            print(child);
+            if (child.text.equals("modifiers")) { continue; }
+            print(child, level+1);
         }
     }
 
@@ -221,8 +223,20 @@ class TreeNode {
         return isLeaf;
     }
 
+    public TreeNode getFirstChildByName(String name) {
+        for (TreeNode child : children) {
+            if (child.text.equals(name)) { return child; }
+        }
+        return null;
+    }
+
     public boolean isTestMethod() {
-        return (text.equals("methodDeclaration"));
+        if (! text.equals("methodDeclaration")) { return false; }
+        TreeNode modifiers      = this.         getFirstChildByName("modifiers");          if (null == modifiers)      { return false; }
+        TreeNode annotation     = modifiers.    getFirstChildByName("annotation");         if (null == annotation)     { return false; }
+        TreeNode qualifiedName  = annotation.   getFirstChildByName("qualifiedName");      if (null == qualifiedName)  { return false; }
+        TreeNode testAnnotation = qualifiedName.getFirstChildByName("IDENTIFIER['Test']"); if (null == testAnnotation) { return false; }
+        return true;
     }
     
     public String toString() { return text; }
