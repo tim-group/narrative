@@ -29,6 +29,8 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonToken;
@@ -75,13 +77,9 @@ public class TreeBuilder {
     }
 
     public void print(TreeNode node, int level) {
-        String name = node.toString();
-        if (name.startsWith("IDENTIFIER")    || 
-            name.startsWith("STRINGLITERAL") || 
-            name.startsWith("CHARLITERAL")) 
-        { 
+        if (node.isLiteral()) { 
             /*for (int i=0; i<level*2; i++) { System.out.print(" "); }*/
-            System.out.println(name); 
+            System.out.println(node.toString());
         }
         for (TreeNode child : node.children) {
             if (child.text.equals("modifiers")) { continue; }
@@ -203,6 +201,7 @@ public class TreeBuilder {
 
 class TreeNode {
     private static final long serialVersionUID = 1L;
+    private static Pattern literalPattern = Pattern.compile(".*\\[['\"]*([^'^\"]*)['\"]*\\]");
     String text;
     private boolean isLeaf = false;
     List<TreeNode> children = new ArrayList<TreeNode>();
@@ -223,6 +222,10 @@ class TreeNode {
         return isLeaf;
     }
 
+    public boolean isLiteral() {
+        return literalPattern.matcher(text).matches();
+    }
+
     public TreeNode getFirstChildByName(String name) {
         for (TreeNode child : children) {
             if (child.text.equals(name)) { return child; }
@@ -239,5 +242,8 @@ class TreeNode {
         return true;
     }
     
-    public String toString() { return text; }
+    public String toString() { 
+        Matcher literalMatcher = literalPattern.matcher(text);
+        if (literalMatcher.matches()) { return literalMatcher.group(1); } else { return text; }
+    }
 }
