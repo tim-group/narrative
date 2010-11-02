@@ -42,7 +42,7 @@ import org.antlr.runtime.TokenRewriteStream;
 public class Scriptwriter {
     private static final long serialVersionUID = 1L;
     
-    Stack<TreeNode> stacks = new Stack<TreeNode>();
+    Stack<TreeNode> treeStack = new Stack<TreeNode>();
     String sourceFile;
     String fileContent;
     TreeNode root;
@@ -59,7 +59,9 @@ public class Scriptwriter {
     }
 
     public void print() {
+        System.out.println("<html><head><title>Test</title></head>\n<body>\n<p>");
         visit(root);
+        System.out.println("</p>\n</body></html>");
     }
 
     public void visit(TreeNode node) {
@@ -84,10 +86,22 @@ public class Scriptwriter {
 
     public void printNode(TreeNode node, int level) {
         if (!node.isLiteral()) { return; }
+
+        String output = prettyOutput(node);
+        if (1 == level) { 
+            output = "</p>\n<h2>" + output + "</h2>\n<p>"; 
+        } else if (output.matches("Given |When |Then ")) { 
+            output = "</p>\n<p><span class='verb'>" + output + "</span> "; 
+        }
+
+        System.out.print(output);
+    }
+
+    public String prettyOutput(TreeNode node) {
         String output = node.toString();
-        if (1 == level) { output = "METHOD NAME: " + output; }
-        else if (output.matches("Given|When|Then")) { output = "VERB: " + output; }
-        System.out.println(output);
+        output = output.replace('_', ' ');
+        output = output.replace("equalTo", "equal to");
+        return output + " ";
     }
 
     /**
@@ -146,7 +160,7 @@ public class Scriptwriter {
      * Stores the current parent in the stack, this is usually called before setting a new parent.
      */
     public void pushTop() {
-        stacks.push(currentParent);
+        treeStack.push(currentParent);
     }
 
     /**
@@ -154,7 +168,7 @@ public class Scriptwriter {
      */
     public TreeNode popTop() {
         TreeNode ret = currentParent;
-        currentParent = stacks.pop();
+        currentParent = treeStack.pop();
         return ret;
     }
 
