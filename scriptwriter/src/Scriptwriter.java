@@ -45,11 +45,13 @@ public class Scriptwriter {
     Stack<TreeNode> treeStack = new Stack<TreeNode>();
     String sourceFile;
     String fileContent;
+    String title;
     TreeNode root;
     TreeNode currentParent;
     
     public static void main(String[] args) {
-        Scriptwriter Scriptwriter = new Scriptwriter(args[0]);
+        String inputFilename = args[0];
+        Scriptwriter Scriptwriter = new Scriptwriter(inputFilename);
         Scriptwriter.print();
     }
 
@@ -60,7 +62,8 @@ public class Scriptwriter {
 
     public void print() {
         System.out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n");
-        System.out.println("<html><head><title>Test</title></head>\n<body>\n<p>");
+        System.out.println("<html><head><title>" + title + "</title></head>\n<body>");
+        System.out.println("<h1>" + title + "</h1>\n<p>");
         visit(root);
         System.out.println("</p>\n</body></html>");
     }
@@ -91,7 +94,8 @@ public class Scriptwriter {
         String output = prettyOutput(node);
         if (1 == level) { 
             output = "</p>\n<h2>" + output + "</h2>\n<p>"; 
-        } else if (output.matches("Given |When |Then ")) { 
+        } 
+        if (output.matches("Given |When |Then ")) { 
             output = "</p>\n<p><span class='verb'>" + output + "</span> "; 
         }
 
@@ -173,12 +177,12 @@ public class Scriptwriter {
         return ret;
     }
 
-    private void loadFile(String file) {
+    private void loadFile(String fileName) {
         FileInputStream in = null;
-        this.sourceFile = file;
+        this.sourceFile = fileName;
         fileContent = null;
         try {
-            in = new FileInputStream(file);
+            in = new FileInputStream(fileName);
             byte[] buf = new byte[10240];
             StringBuffer sbuf = new StringBuffer(buf.length);
             int len = in.read(buf);
@@ -196,6 +200,13 @@ public class Scriptwriter {
             }
         }
 
+        Pattern titlePattern = Pattern.compile(".*/(.*)Test\\.java");
+        Matcher titleMatcher = titlePattern.matcher(fileName);
+        if (titleMatcher.matches()) {
+            title = titleMatcher.group(1);
+        } else {
+            title = "Unknown test title";
+        }
     }
 
     private void buildTree() {
