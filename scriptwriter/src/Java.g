@@ -293,9 +293,9 @@ options {
 }
 
 @members{
-    private TreeBuilder T;
+    private Scriptwriter T;
    // private DefaultMutableTreeNode oldNode;
-    public void setTreeBuilder(TreeBuilder T){
+    public void setScriptwriter(Scriptwriter T){
         this.T = T;
     }
 }      
