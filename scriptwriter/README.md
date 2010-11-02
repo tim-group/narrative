@@ -2,7 +2,7 @@ To build, type
 ant dist
 
 To run, type
-java -jar dist/tree.jar [name of file to parse]
+java -jar dist/scriptwriter.jar [name of file to parse]
 
 ----Original README-------
 

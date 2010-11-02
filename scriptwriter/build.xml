@@ -102,7 +102,7 @@
 
 
   <target name="dist" depends="tree, install-antlr-runtime">
-     <jar file="${dist.dir}/tree.jar" basedir="${build.classes.dir}">
+     <jar file="${dist.dir}/scriptwriter.jar" basedir="${build.classes.dir}">
 	<manifest>    
              <attribute name="Main-Class" value="TreeBuilder"/>
         </manifest>
