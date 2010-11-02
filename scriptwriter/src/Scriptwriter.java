@@ -73,14 +73,21 @@ public class Scriptwriter {
     }
 
     public void print(TreeNode node, int level) {
-        if (node.isLiteral()) { 
-            /*for (int i=0; i<level*2; i++) { System.out.print(" "); }*/
-            System.out.println(node.toString());
-        }
+//for (int i=0; i<level*2; i++) { System.out.print(" "); }
+//System.out.println(node.toString());
+        printNode(node, level);
         for (TreeNode child : node.children) {
             if (child.text.equals("modifiers")) { continue; }
             print(child, level+1);
         }
+    }
+
+    public void printNode(TreeNode node, int level) {
+        if (!node.isLiteral()) { return; }
+        String output = node.toString();
+        if (1 == level) { output = "METHOD NAME: " + output; }
+        else if (output.matches("Given|When|Then")) { output = "VERB: " + output; }
+        System.out.println(output);
     }
 
     /**
@@ -197,7 +204,7 @@ public class Scriptwriter {
 
 class TreeNode {
     private static final long serialVersionUID = 1L;
-    private static Pattern literalPattern = Pattern.compile(".*\\[['\"]*([^'^\"]*)['\"]*\\]");
+    private static Pattern literalPattern = Pattern.compile(".*\\[['\"](.*)['\"]\\]");
     String text;
     private boolean isLeaf = false;
     List<TreeNode> children = new ArrayList<TreeNode>();
