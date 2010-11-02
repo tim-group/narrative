@@ -59,6 +59,7 @@ public class Scriptwriter {
     }
 
     public void print() {
+        System.out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n");
         System.out.println("<html><head><title>Test</title></head>\n<body>\n<p>");
         visit(root);
         System.out.println("</p>\n</body></html>");
