@@ -1,3 +1,6 @@
+html {
+  background: #111;
+}
 body {
   background: #111;
   color: #ccc;
@@ -17,7 +20,7 @@ a {
 h1 {
   font-size: 80px;
   position: absolute;
-  top: -50px;
+  top: 10px;
   left: 320px;
 }
 h4 {
