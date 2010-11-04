@@ -25,7 +25,6 @@
  * have any questions.
  */
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -55,7 +54,8 @@ public class Scriptwriter {
     public static void main(String[] args) throws Exception {
         String inputFilename = args[0];
         Scriptwriter scriptwriter = new Scriptwriter(inputFilename);
-        Writer out = new FileWriter(scriptwriter.title + ".html");
+        new File("output").mkdir();
+        Writer out = new FileWriter("output/" + scriptwriter.title + ".html");
         scriptwriter.print(out);
         out.close();
     }
