@@ -28,6 +28,9 @@
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -49,46 +52,48 @@ public class Scriptwriter {
     TreeNode root;
     TreeNode currentParent;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String inputFilename = args[0];
-        Scriptwriter Scriptwriter = new Scriptwriter(inputFilename);
-        Scriptwriter.print();
+        Scriptwriter scriptwriter = new Scriptwriter(inputFilename);
+        Writer out = new FileWriter(scriptwriter.title + ".html");
+        scriptwriter.print(out);
+        out.close();
     }
 
-    public Scriptwriter(String file) {
+    public Scriptwriter(String file) throws Exception {
         loadFile(file);
         buildTree();
     }
 
-    public void print() {
-        System.out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n");
-        System.out.println("<html><head><title>" + title + "</title></head>\n<body>");
-        System.out.println("<h1>" + title + "</h1>\n<p>");
-        visit(root);
-        System.out.println("</p>\n</body></html>");
+    public void print(Writer out) throws IOException {
+        out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n");
+        out.write("<html><head><title>" + title + "</title></head>\n<body>\n");
+        out.write("<h1>" + title + "</h1>\n<p>");
+        visit(root, out);
+        out.write("</p>\n</body></html>");
     }
 
-    public void visit(TreeNode node) {
+    public void visit(TreeNode node, Writer out) throws IOException {
         for (TreeNode child : node.children) {
             if (child.isTestMethod()) {
-                print(child, 0);
+                print(child, 0, out);
             } else {
-                visit(child);
+                visit(child, out);
             }
         }
     }
 
-    public void print(TreeNode node, int level) {
+    public void print(TreeNode node, int level, Writer out) throws IOException {
 //for (int i=0; i<level*2; i++) { System.out.print(" "); }
-//System.out.println(node.toString());
-        printNode(node, level);
+//out.write(node.toString());
+        printNode(node, level, out);
         for (TreeNode child : node.children) {
             if (child.text.equals("modifiers")) { continue; }
-            print(child, level+1);
+            print(child, level+1, out);
         }
     }
 
-    public void printNode(TreeNode node, int level) {
+    public void printNode(TreeNode node, int level, Writer out) throws IOException {
         if (!node.isLiteral()) { return; }
 
         String output = prettyOutput(node);
@@ -99,7 +104,7 @@ public class Scriptwriter {
             output = "</p>\n<p><span class='verb'>" + output + "</span> "; 
         }
 
-        System.out.print(output);
+        out.write(output);
     }
 
     public String prettyOutput(TreeNode node) {
