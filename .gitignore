@@ -4,6 +4,6 @@
 /narrative-*.jar
 /target
 /scriptwriter/build
-/scriptwriter/output
+/scriptwriter/output/*.html
 /scriptwriter/dist
 .gradle*

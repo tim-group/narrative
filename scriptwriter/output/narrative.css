@@ -1,0 +1,46 @@
+body {
+  background: #111;
+  color: #ccc;
+  font-family: 'Cantarell', arial, serif;
+  font-size: 16px;
+}
+a {
+  color: #aaddff;
+}
+.heading {
+  background-color: #2c1d4c;
+  position: relative;
+  margin-bottom: 50px;
+  height: 110px;
+  border-bottom: 2px solid #ccc;
+}
+h1 {
+  font-size: 80px;
+  position: absolute;
+  top: -50px;
+  left: 320px;
+}
+h4 {
+  position: absolute;
+  top: 112px;
+  left: 380px;
+}
+
+.body {
+ padding: 0px 200px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+p {
+  margin-left: 10px;
+}
+
+.verb {
+  font-style: italic;
+}

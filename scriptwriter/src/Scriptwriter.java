@@ -67,10 +67,17 @@ public class Scriptwriter {
 
     public void print(Writer out) throws IOException {
         out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n");
-        out.write("<html><head><title>" + title + "</title></head>\n<body>\n");
-        out.write("<h1>" + title + "</h1>\n<p>");
+        out.write("<html><head><title>" + title + "</title>\n"
+                + "<link rel='stylesheet' type='text/css' href='http://yui.yahooapis.com/combo?2.8.1/build/reset/reset-min.css'>\n"
+                + "<link href='http://fonts.googleapis.com/css?family=Cantarell&amp;subset=latin' rel='stylesheet' type='text/css'>\n"
+                + "<link href='http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css' rel='stylesheet' type='text/css'>\n"
+                + "<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>\n"
+                + "<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js' type='text/javascript'></script>\n"
+                + "<link rel='stylesheet' type='text/css' href='narrative.css'>\n"
+                + "</head>\n<body>\n");
+        out.write("<div class='heading'><h1>" + title + "</h1></div>\n<div class='body'>\n<p>");
         visit(root, out);
-        out.write("</p>\n</body></html>");
+        out.write("</p>\n</div></body></html>");
     }
 
     public void visit(TreeNode node, Writer out) throws IOException {
