@@ -4,7 +4,7 @@ A framework for building behaviour-driven tests in fluent Java. Copyright 2010 [
 
 # Installation #
 
-Download [the Narrative jar file](http://github.com/downloads/youdevise/narrative/narrative-0.9.jar) and put it in your classpath where your test code can see it.
+Download [the Narrative jar file](http://github.com/downloads/youdevise/narrative/narrative-0.9.jar) and the [Hamcrest Matchers library (version 1.2)](http://code.google.com/p/hamcrest/downloads/detail?name=hamcrest-all-1.2.jar).  Then, put both in your classpath where your test code can see it.
 
 # Usage #
 
