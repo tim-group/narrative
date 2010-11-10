@@ -35,17 +35,41 @@
   </path>
   <property name="antlr.classpath" refid="antlr.classpath"/>
 
-
   <patternset id="antlr.runtime">
     <include name="org/antlr/runtime/**"/>
   </patternset>
 
-  <target name="javag">
+  <target name="mkdirs">
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${build.classes.dir}"/>
     <mkdir dir="${build.gensrc.dir}"/>
     <mkdir dir="${dist.dir}"/>
+  </target>
+    
+  <target name="uptodate-javag" depends="mkdirs">
+    <uptodate property="javag.uptodate.antlr" srcfile="${src.dir}/ANTLRv3.g">
+      <compositemapper>
+        <mapper type="merge" to="${build.classes.dir}/ANTLRv3Lexer.class"/>
+        <mapper type="merge" to="${build.classes.dir}/ANTLRv3Parser.class"/>
+      </compositemapper>
+    </uptodate>
 
+    <uptodate property="javag.uptodate.grammartransformer" srcfile="${src.dir}/GrammarTransformer.java"
+              targetfile="${build.classes.dir}/GrammarTransformer.class"/>
+ 
+    <uptodate property="javag.uptodate.javagrammar" srcfile="${src.dir}/Java.g"
+              targetfile="${build.gensrc.dir}/Java.g"/>
+
+    <condition property="javag.uptodate">
+      <and>
+        <isset property="javag.uptodate.antlr"/>
+        <isset property="javag.uptodate.grammartransformer"/>
+        <isset property="javag.uptodate.javagrammar"/>
+      </and>
+    </condition>
+  </target>
+
+  <target name="javag" depends="mkdirs, uptodate-javag" unless="javag.uptodate">
     <java classname="org.antlr.Tool">
       <classpath refid="antlr.classpath"/>
       <arg value="-o"/>
@@ -77,7 +101,16 @@
     </java>
   </target>
 
-  <target name="tree" depends="javag">
+  <target name="uptodate-javaparser" depends="mkdirs">
+    <uptodate property="javaparser.uptodate" srcfile="${build.gensrc.dir}/Java.g">
+      <compositemapper>
+        <mapper type="merge" to="${build.classes.dir}/JavaLexer.class"/>
+        <mapper type="merge" to="${build.classes.dir}/JavaParser.class"/>
+      </compositemapper>
+    </uptodate>
+  </target>
+
+  <target name="javaparser" depends="javag, uptodate-javaparser" unless="javaparser.uptodate">
     <java classname="org.antlr.Tool">
       <classpath refid="antlr.classpath"/>
       <arg value="-o"/>
@@ -86,7 +119,9 @@
       <arg line="-Xconversiontimeout  1000000"/>
       <arg file="${build.gensrc.dir}/Java.g"/>
     </java>  
+  </target>
 
+  <target name="compile" depends="javaparser">
     <javac fork="true"
 	   srcdir="${src.dir};${build.gensrc.dir}"
 	   classpath="${antlr.classpath};${build.classes.dir}"
@@ -101,10 +136,10 @@
   </target>
 
 
-  <target name="dist" depends="tree, install-antlr-runtime">
+  <target name="dist" depends="compile, install-antlr-runtime">
      <jar file="${dist.dir}/scriptwriter.jar" basedir="${build.classes.dir}">
-	<manifest>    
-             <attribute name="Main-Class" value="Scriptwriter"/>
+        <manifest>    
+          <attribute name="Main-Class" value="Scriptwriter"/>
         </manifest>
      </jar>
   </target>
