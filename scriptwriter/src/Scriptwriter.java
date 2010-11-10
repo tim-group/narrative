@@ -1,22 +1,38 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 
 public class Scriptwriter {
     String title = "Temp title - get from class name";
     TreeNode root;
     
     public static void main(String[] args) throws Exception {
-        String inputFilename = args[0];
+        String fileContent = slurpFile(args[0]);
         TestParser parser = new TestParser();
-        TreeNode parseTree = parser.parse(inputFilename);
+        TreeNode parseTree = parser.parse(fileContent);
         Scriptwriter scriptwriter = new Scriptwriter(parseTree);
 
         new File("output").mkdir();
         Writer out = new FileWriter("output/" + scriptwriter.title + ".html");
         scriptwriter.print(out);
         out.close();
+    }
+
+    private static String slurpFile(String fileName) throws IOException {
+        FileInputStream stream = new FileInputStream(new File(fileName));
+        try {
+            FileChannel fc = stream.getChannel();
+            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            return Charset.defaultCharset().decode(bb).toString();
+        }
+        finally {
+            stream.close();
+        }
     }
 
     public Scriptwriter(TreeNode root) throws Exception {

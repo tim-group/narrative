@@ -25,12 +25,6 @@
  * have any questions.
  */
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -48,23 +42,24 @@ public class TestParser {
     
     public TestParser() { }
 
-    public TreeNode parse(String fileName) throws IOException {
-        String fileContent = slurpFile(fileName);
-        return buildTree(fileContent);
-    }
-
-    private String slurpFile(String fileName) throws IOException {
-        FileInputStream stream = new FileInputStream(new File(fileName));
+    public TreeNode parse(String fileContent) throws Exception {
+        TreeNode root = new TreeNode("compilationUnit");
         try {
-            FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            return Charset.defaultCharset().decode(bb).toString();
+            JavaLexer lex = new JavaLexer(new ANTLRStringStream(fileContent));
+            TokenRewriteStream tokens = new TokenRewriteStream(lex);
+            JavaParser g = new JavaParser(tokens);
+            g.setTestParser(this);
+            this.setCurrentParent(root);
+            g.compilationUnit();                        
+            if (g.getNumberOfSyntaxErrors() != 0) {
+                throw new IllegalStateException("There are syntax errors in the input file.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException("There are syntax errors in input file.");
         }
-        finally {
-            stream.close();
-        }
+        return root;
     }
-
 
     /**
      * Set the current parent of the node. Any node added after this call will be 
@@ -132,25 +127,6 @@ public class TestParser {
         TreeNode ret = currentParent;
         currentParent = treeStack.pop();
         return ret;
-    }
-
-    private TreeNode buildTree(String fileContent) {
-        TreeNode root = new TreeNode("compilationUnit");
-        try {
-            JavaLexer lex = new JavaLexer(new ANTLRStringStream(fileContent));
-            TokenRewriteStream tokens = new TokenRewriteStream(lex);
-            JavaParser g = new JavaParser(tokens);
-            g.setTestParser(this);
-            this.setCurrentParent(root);
-            g.compilationUnit();                        
-            if (g.getNumberOfSyntaxErrors() != 0) {
-                throw new IllegalStateException("There are syntax errors in the input file.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalStateException("There are syntax errors in input file.");
-        }
-        return root;
     }
 }
 
