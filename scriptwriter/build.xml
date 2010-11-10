@@ -145,13 +145,7 @@
   </target>
 
   <target name="test" depends="dist">
-    <echo level="info">Trying to parse file Test.java.</echo>
-    <java classname="TreeBuilder" fork="true" >
-          <classpath>
-	    <pathelement location="${dist.dir}/tree.jar"/>
-	  </classpath>
-      <arg file="Test.java"/>
-    </java>  
+    <echo level="info">No tests currently implemented.</echo>
   </target>
 
   <target name="clean" description="Delete all generated files">
