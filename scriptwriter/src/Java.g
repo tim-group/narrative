@@ -293,9 +293,8 @@ options {
 }
 
 @members{
-    private Scriptwriter T;
-   // private DefaultMutableTreeNode oldNode;
-    public void setScriptwriter(Scriptwriter T){
+    private TestParser T;
+    public void setTestParser(TestParser T){
         this.T = T;
     }
 }      
@@ -426,6 +425,7 @@ enumDeclaration
     
 
 enumBody 
+
     :   '{'
         (enumConstants
         )? 
