@@ -131,11 +131,12 @@ public class ClassFileParser {
 }
 
 class TreeNode {
-    private static final long serialVersionUID = 1L;
     private static Pattern literalPattern = Pattern.compile(".*\\[['\"](.*)['\"]\\]");
+
     String text;
-    private boolean isLeaf = false;
     List<TreeNode> children = new ArrayList<TreeNode>();
+
+    private boolean isLeaf = false;
 
     public TreeNode(String text) {
         this.text = text;
@@ -164,15 +165,6 @@ class TreeNode {
         return null;
     }
 
-    public boolean isTestMethod() {
-        if (! text.equals("methodDeclaration")) { return false; }
-        TreeNode modifiers      = this.         getFirstChildByName("modifiers");          if (null == modifiers)      { return false; }
-        TreeNode annotation     = modifiers.    getFirstChildByName("annotation");         if (null == annotation)     { return false; }
-        TreeNode qualifiedName  = annotation.   getFirstChildByName("qualifiedName");      if (null == qualifiedName)  { return false; }
-        TreeNode testAnnotation = qualifiedName.getFirstChildByName("IDENTIFIER['Test']"); if (null == testAnnotation) { return false; }
-        return true;
-    }
-    
     public String toString() { 
         Matcher literalMatcher = literalPattern.matcher(text);
         if (literalMatcher.matches()) { return literalMatcher.group(1); } else { return text; }

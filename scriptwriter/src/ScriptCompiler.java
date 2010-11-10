@@ -44,7 +44,7 @@ public class ScriptCompiler {
 
     public void visit(TreeNode node, Writer out) throws IOException {
         for (TreeNode child : node.children) {
-            if (child.isTestMethod()) {
+            if (isTestMethod(child)) {
                 print(child, 0, out);
             } else {
                 visit(child, out);
@@ -81,5 +81,14 @@ public class ScriptCompiler {
         output = output.replace('_', ' ');
         output = output.replace("equalTo", "equal to");
         return output + " ";
+    }
+
+    public boolean isTestMethod(TreeNode node) {
+        if (! node.text.equals("methodDeclaration")) { return false; }
+        TreeNode modifiers      = node.         getFirstChildByName("modifiers");          if (null == modifiers)      { return false; }
+        TreeNode annotation     = modifiers.    getFirstChildByName("annotation");         if (null == annotation)     { return false; }
+        TreeNode qualifiedName  = annotation.   getFirstChildByName("qualifiedName");      if (null == qualifiedName)  { return false; }
+        TreeNode testAnnotation = qualifiedName.getFirstChildByName("IDENTIFIER['Test']"); if (null == testAnnotation) { return false; }
+        return true;
     }
 }
