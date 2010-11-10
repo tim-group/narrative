@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class ScriptCompiler {
-    String title = "Temp title - get from class name";
-    
     public ScriptCompiler() { }
 
     public void compile(TreeNode root) throws IOException {
+        String title = getTitle(root);
+
         new File("output").mkdir();
         Writer out = new FileWriter("output/" + title + ".html");
 
@@ -28,6 +28,18 @@ public class ScriptCompiler {
         } finally {
             out.close();
         }
+    }
+
+    public String getTitle(TreeNode root) {
+        TreeNode classDeclarationNode = root.getFirstChildByName("typeDeclaration")
+                                            .getFirstChildByName("classOrInterfaceDeclaration")
+                                            .getFirstChildByName("classDeclaration")
+                                            .getFirstChildByName("normalClassDeclaration");
+        for (TreeNode child : classDeclarationNode.children) {
+            if (child.isLiteral()) { return child.toString(); }
+        }
+
+        return "Unknown title";
     }
 
     public void visit(TreeNode node, Writer out) throws IOException {
