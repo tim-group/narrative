@@ -36,11 +36,11 @@ import org.antlr.runtime.CommonToken;
 import org.antlr.runtime.Token;
 import org.antlr.runtime.TokenRewriteStream;
 
-public class TestParser {
+public class ClassFileParser {
     Stack<TreeNode> treeStack = new Stack<TreeNode>();
     TreeNode currentParent;
     
-    public TestParser() { }
+    public ClassFileParser() { }
 
     public TreeNode parse(String fileContent) throws Exception {
         TreeNode root = new TreeNode("compilationUnit");
@@ -48,7 +48,7 @@ public class TestParser {
             JavaLexer lex = new JavaLexer(new ANTLRStringStream(fileContent));
             TokenRewriteStream tokens = new TokenRewriteStream(lex);
             JavaParser g = new JavaParser(tokens);
-            g.setTestParser(this);
+            g.setClassFileParser(this);
             this.setCurrentParent(root);
             g.compilationUnit();                        
             if (g.getNumberOfSyntaxErrors() != 0) {

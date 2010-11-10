@@ -293,8 +293,8 @@ options {
 }
 
 @members{
-    private TestParser T;
-    public void setTestParser(TestParser T){
+    private ClassFileParser T;
+    public void setClassFileParser(ClassFileParser T){
         this.T = T;
     }
 }      

@@ -9,7 +9,7 @@ public class Author {
     public static void main(String[] args) throws Exception {
         String fileContent = slurpFile(args[0]);
 
-        TestParser parser = new TestParser();
+        ClassFileParser parser = new ClassFileParser();
         TreeNode parseTree = parser.parse(fileContent);
 
         ScriptCompiler compiler = new ScriptCompiler();
