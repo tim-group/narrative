@@ -28,6 +28,9 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -45,13 +48,26 @@ public class TestParser {
     
     public TestParser() { }
 
-    public TreeNode parse(String fileName) throws Exception {
-        String fileContent = loadFile(fileName);
+    public TreeNode parse(String fileName) throws IOException {
+        String fileContent = slurpFile(fileName);
         return buildTree(fileContent);
     }
 
+    private String slurpFile(String fileName) throws IOException {
+        FileInputStream stream = new FileInputStream(new File(fileName));
+        try {
+            FileChannel fc = stream.getChannel();
+            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            return Charset.defaultCharset().decode(bb).toString();
+        }
+        finally {
+            stream.close();
+        }
+    }
+
+
     /**
-     * Set the current parent of the node. Any node added after this call we be 
+     * Set the current parent of the node. Any node added after this call will be 
      * counted as children of the newParent.
      * 
      * @param newParent
@@ -116,30 +132,6 @@ public class TestParser {
         TreeNode ret = currentParent;
         currentParent = treeStack.pop();
         return ret;
-    }
-
-    private String loadFile(String fileName) {
-        FileInputStream in = null;
-        String fileContent = null;
-        try {
-            in = new FileInputStream(fileName);
-            byte[] buf = new byte[10240];
-            StringBuffer sbuf = new StringBuffer(buf.length);
-            int len = in.read(buf);
-            while (len > 0) {
-                sbuf.append(new String(buf, 0, len));
-                len = in.read(buf);
-            }
-            fileContent = sbuf.toString();
-        } catch (Exception e) {
-            fileContent = null;
-        } finally {
-            try {
-                in.close();
-            } catch (Exception e) {
-            }
-        }
-        return fileContent;
     }
 
     private TreeNode buildTree(String fileContent) {
