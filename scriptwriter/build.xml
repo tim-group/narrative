@@ -139,7 +139,7 @@
   <target name="dist" depends="compile, install-antlr-runtime">
      <jar file="${dist.dir}/scriptwriter.jar" basedir="${build.classes.dir}">
         <manifest>    
-          <attribute name="Main-Class" value="Scriptwriter"/>
+          <attribute name="Main-Class" value="Author"/>
         </manifest>
      </jar>
   </target>

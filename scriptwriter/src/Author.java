@@ -5,7 +5,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
-public class Scriptwriter {
+public class Author {
     public static void main(String[] args) throws Exception {
         String fileContent = slurpFile(args[0]);
 
