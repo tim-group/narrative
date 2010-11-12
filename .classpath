@@ -2,10 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="scriptwriter2/src"/>
+	<classpathentry kind="src" path="examples/example_1/src/main/java"/>
+	<classpathentry kind="src" path="examples/example_1/src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/hamcrest-all-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.6.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-dep-4.5.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-junit4-2.6.0-RC1.jar"/>
+	<classpathentry kind="lib" path="scriptwriter2/lib/commons-io-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
