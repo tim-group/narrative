@@ -6,4 +6,5 @@
 /scriptwriter/build
 /scriptwriter/output/*.html
 /scriptwriter/dist
+/scriptwriter2/build
 .gradle*
