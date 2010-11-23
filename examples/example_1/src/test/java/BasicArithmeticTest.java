@@ -2,6 +2,8 @@ package com.youdevise.narrative.example;
 
 import com.youdevise.test.narrative.*;
 
+import static org.hamcrest.Matchers.is;
+
 import org.junit.*;
 import org.hamcrest.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -31,7 +33,7 @@ public class BasicArithmeticTest {
 
         When.the( operator).attempts_to( press('='));
 
-        Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("4"));
+        Then.the( operator).expects_that( the_displayed_value(), is("4"));
     }
 
     @Test public void
@@ -42,7 +44,7 @@ public class BasicArithmeticTest {
 
         When.the( operator).attempts_to( press('='));
 
-        Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("2"));
+        Then.the( operator).expects_that( the_displayed_value(), is("2"));
     }
 
     /*
