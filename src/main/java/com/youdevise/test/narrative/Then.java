@@ -24,7 +24,7 @@ public class Then<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
             this.expected = expected;
             this.outer = outer;
         }
-        
+
         public TypedMatcher<DATA> should_be(Matcher<? super DATA> matcher) {
             return should(matcher);
         }
@@ -38,7 +38,7 @@ public class Then<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
             return this;
         }
 
-        public Then<TOOL, ACTOR> andAlso() {
+        public Then<TOOL, ACTOR> and_also() {
             return outer;
         }
 
