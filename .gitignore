@@ -4,3 +4,5 @@
 /narrative-*.jar
 /target
 .gradle*
+.classpath
+.project
