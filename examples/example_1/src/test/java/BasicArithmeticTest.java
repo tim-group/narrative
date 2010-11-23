@@ -1,13 +1,13 @@
-package com.youdevise.narrative.example;
+import org.junit.Test;
 
-import com.youdevise.test.narrative.*;
+import com.youdevise.test.narrative.Action;
+import com.youdevise.test.narrative.Actor;
+import com.youdevise.test.narrative.Extractor;
+import com.youdevise.test.narrative.Given;
+import com.youdevise.test.narrative.Then;
+import com.youdevise.test.narrative.When;
 
 import static org.hamcrest.Matchers.is;
-
-import org.junit.*;
-import org.hamcrest.*;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
 
 /*
     Tests for a very basic console-based calculator, to illustrate usage of the Narrative library.

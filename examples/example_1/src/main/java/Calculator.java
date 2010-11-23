@@ -1,13 +1,11 @@
-package com.youdevise.narrative.example;
-
 public class Calculator {
     private static enum OPERATOR {
         PLUS {
             public int apply(int accumulator, int value) { return accumulator + value; }
-        }, 
+        },
         MINUS {
             public int apply(int accumulator, int value) { return accumulator - value; }
-        }, 
+        },
         EQUALS {
             public int apply(int accumulator, int value) { return accumulator;         }
         };
