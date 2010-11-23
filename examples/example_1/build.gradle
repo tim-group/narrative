@@ -1,4 +1,6 @@
 apply plugin: "java"
+
+defaultTasks 'clean', 'test'
  
 repositories {  
     mavenCentral()
