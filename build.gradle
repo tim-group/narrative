@@ -4,6 +4,7 @@ apply plugin: 'eclipse'
 defaultTasks 'clean', 'test', 'jar'
 
 group = "com.youdevise"
+targetCompatibility = 1.5
 version = '0.9'
     
 repositories {  
