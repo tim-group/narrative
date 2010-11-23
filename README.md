@@ -18,7 +18,7 @@ Here is a typical Narrative test (the object under test is a very simple calcula
 
         When.the( operator).attempts_to( press('='));
 
-        Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("4"));
+        Then.the( operator).expects_that( the_displayed_value(), is("4"));
     }
 
 To make this test work, you need to define:
