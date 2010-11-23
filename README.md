@@ -42,7 +42,10 @@ Use `gradle` to build, run tests, and produce the `Narrative.jar` in `build/libs
 
 # Eclipse #
 
-To view Narrative source code in Eclipse, run `gradle :eclipse` (or `./gradlew :eclipse`). This downloads the libraries and creates the project and classpath files. You can then open the project in Eclipse normally.
+To view Narrative source code in Eclipse:
+1. Run `gradle :eclipse` (or `./gradlew :eclipse`). This downloads the libraries and creates the project and classpath files. 
+2. Create a new classpath variable in Preferences / Java / Build Path / Classpath Variables with the name `GRADLE_CACHE` and the value `<USER_HOME>/.gradle/cache` (we have not tested this on Windows).
+3. Import the project as normal.
 
 # License #
 
