@@ -64,6 +64,8 @@ code, div.code {
   font-family: monospace;
   font-size: 15px;
   font-weight: bold;
+  background: black;
+  color: lightGreen;
 }
 
 li {

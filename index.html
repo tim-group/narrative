@@ -17,7 +17,7 @@
     <h4>A framework for building behaviour-driven tests in fluent Java</h4>
    </div>
    <div class="body">
-    <p>Narrative gives you the tools to write <em>readable</em> <a href="http://behaviour-driven.org/">behaviour-driven tests</a> in Java, like this:</p>
+    <p>Narrative gives you the tools to write <em>readable</em> <a href="http://github.com/youdevise/narrative/wiki/BDD">behaviour-driven tests</a> in Java, like this:</p>
 
     <h3>1. Describe the desired behaviour in fluent Java:</h3>
 <div class="code">@Test public void
@@ -28,12 +28,12 @@ adds_two_numbers() {
 
     When.the( operator).attempts_to( press('='));
 
-    Then.the( operator).expects_that( the_displayed_value()).should_be( equalTo("4"));
+    Then.the( operator).expects_that( the_displayed_value(), is("4"));
 }
 </div>
 
-    <h3>2. Define one or more <code>Actor</code>s and actions for those <code>Actor</code>s to carry out, making your test code compile</h3>
-    <h3>3. Run your test and watch it fail</h3> 
+    <h3>2. Define one or more <code>Actor</code>s and <code>Action</code>s for those <code>Actor</code>s to carry out, making your acceptance-test code compile</h3>
+    <h3>3. Run your acceptance-test and watch it fail</h3> 
     <h3>4. Use <a href="http://en.wikipedia.org/wiki/Test-driven_development">test-driven development</a> to implement the behaviour described</h3>
     <h3>5. Run your test again and watch it pass</h3>
     <h3>6. Repeat steps 1-5</h3>
@@ -50,7 +50,7 @@ adds_two_numbers() {
 
     <h2>Why Narrative?</h2>
       <ul>
-        <li>Narrative is 100% Java and installation is as simple as adding a <code>jar</code> file to your classpath.</li>
+          <li>Narrative is 100% Java and installation is as simple as adding the Narrative and Hamcrest jars to your classpath.</li>
         <li>Tests you write with Narrative are also 100% Java, so you can
           <ul>
             <li><strong>Refactor</strong> your tests using your favourite tools.</li>
