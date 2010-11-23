@@ -16,16 +16,16 @@ public class Then<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
         this.actor = actor;
     }
 
+    public static <TOOL, ACTOR extends Actor<TOOL, ACTOR>> Then<TOOL, ACTOR> the(ACTOR actor) {
+        return new Then<TOOL, ACTOR>(actor);
+    }
+
+    public <TOOL2, ACTOR2 extends Actor<TOOL2, ACTOR2>> Then<TOOL2, ACTOR2> and_the(ACTOR2 actor) {
+        return the(actor);
+    }
+
     public <DATA> Then<TOOL, ACTOR> expects_that(Extractor<DATA, ACTOR> expected, Matcher<? super DATA> matcher) {
         assertThat(actor.grabUsing(expected), matcher);
         return this;
-    }
-
-    public Then<TOOL, ACTOR> and_also() {
-        return this;
-    }
-
-    public static <TOOL, ACTOR extends Actor<TOOL, ACTOR>> Then<TOOL, ACTOR> the(ACTOR actor) {
-        return new Then<TOOL, ACTOR>(actor);
     }
 }

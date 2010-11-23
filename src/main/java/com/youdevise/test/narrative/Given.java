@@ -12,12 +12,12 @@ public class Given<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
         this.actor = actor;
     }
 
-    public static <T, A extends Actor<T, A>> Given<T, A> the(A actor) {
-        return new Given<T, A>(actor);
+    public static <TOOL, ACTOR extends Actor<TOOL, ACTOR>> Given<TOOL, ACTOR> the(ACTOR actor) {
+        return new Given<TOOL, ACTOR>(actor);
     }
 
-    public <T, A extends Actor<T, A>> Given<T, A> and_the(A actor) {
-        return new Given<T, A>(actor);
+    public <TOOL2, ACTOR2 extends Actor<TOOL2, ACTOR2>> Given<TOOL2, ACTOR2> and_the(ACTOR2 actor) {
+        return new Given<TOOL2, ACTOR2>(actor);
     }
 
     public Given<TOOL, ACTOR> was_able_to(Action<TOOL, ACTOR> action) {
