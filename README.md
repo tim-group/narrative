@@ -40,6 +40,10 @@ In the Narrative home directory, type `./gradlew` (on Linux and Mac) or `gradlew
 
 Use `gradle` to build, run tests, and produce the `Narrative.jar` in `build/libs`.
 
+# Eclipse #
+
+To view Narrative source code in Eclipse, run `gradle :eclipse` (or `./gradlew :eclipse`). This downloads the libraries and creates the project and classpath files. You can then open the project in Eclipse normally.
+
 # License #
 
 Open source under the very permissive [MIT license](http://github.com/youdevise/narrative/blob/master/LICENSE).
