@@ -1,8 +1,5 @@
 /bin
 /build
-/results
-/narrative-*.jar
-/target
 .gradle*
 .classpath
 .project
