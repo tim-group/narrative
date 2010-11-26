@@ -2,8 +2,11 @@ package com.youdevise.test.narrative;
 
 /**
  * Declaration of the initial state that the system should be in.
- * @param <TOOL> The type of tool used by the Actor.
- * @param <ACTOR> The type of Actor.
+ *
+ * @param <TOOL>
+ *            The type of the tool used by the actor.
+ * @param <ACTOR>
+ *            The type of the actor.
  */
 public class Given<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
     private final ACTOR actor;

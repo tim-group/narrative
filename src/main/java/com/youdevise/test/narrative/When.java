@@ -1,9 +1,13 @@
 package com.youdevise.test.narrative;
 
 /**
- * Action declaration of what the Actor does to achieve the final desired result, which is then checked with a Then statement.
- * @param <TOOL> The type of the tool the Actor uses
- * @param <ACTOR> The type of the Actor
+ * Declaration of what the Actor does to achieve the final desired result, which
+ * is then checked with a Then statement.
+ *
+ * @param <TOOL>
+ *            The type of the tool used by the actor.
+ * @param <ACTOR>
+ *            The type of the actor.
  */
 public class When<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
     private final ACTOR actor;
