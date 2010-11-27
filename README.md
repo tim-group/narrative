@@ -4,7 +4,7 @@ A framework for building behaviour-driven tests in fluent Java. Copyright 2010 [
 
 # Installation #
 
-Download [the Narrative jar file](http://github.com/downloads/youdevise/narrative/narrative-0.9.jar) and the [Hamcrest Matchers library (version 1.2)](http://code.google.com/p/hamcrest/downloads/detail?name=hamcrest-all-1.2.jar).  Then, put both in your classpath where your test code can see it.
+Download [the Narrative jar file](http://github.com/downloads/youdevise/narrative/narrative-1.0.jar) and the [Hamcrest Matchers library (version 1.2)](http://code.google.com/p/hamcrest/downloads/detail?name=hamcrest-all-1.2.jar).  Then put both jars in your classpath where your test code can see them.
 
 # Usage #
 
@@ -45,7 +45,7 @@ Use `gradle` to build, run tests, and produce the `Narrative.jar` in `build/libs
 To view Narrative source code in Eclipse:
 
   1. Run `gradle :eclipse` (or `./gradlew :eclipse`). This downloads the libraries and creates the project and classpath files. 
-  2. Create a new classpath variable in Preferences / Java / Build Path / Classpath Variables with the name `GRADLE_CACHE` and the value `<USER_HOME>/.gradle/cache` (we have not tested this on Windows).
+  2. Create a new classpath variable in Preferences / Java / Build Path / Classpath Variables with the name `GRADLE_CACHE` and the value `<USER_HOME>/.gradle/cache` (we have not tested this on Windows, but we think it should work similarly).
   3. Import the project as normal.
 
 # License #
