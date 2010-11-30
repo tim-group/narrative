@@ -27,7 +27,7 @@ public class GivenTest {
     
     @SuppressWarnings("unchecked")
     @Test public void
-    canPerformanManyActionsInARow() {
+    canPerformManyActionsInARow() {
         final StringActor actor = context.mock(StringActor.class);
         final Action<String, StringActor> action = context.mock(Action.class, "first action");
         final Action<String, StringActor> otherAction = context.mock(Action.class, "second action");
