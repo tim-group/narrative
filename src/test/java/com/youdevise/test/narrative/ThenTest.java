@@ -68,7 +68,29 @@ public class ThenTest {
         }});
 
         Then.the(actor).expects_that(characterExtractor, is('a'))
-                       .expects_that(stringExtractor, is("string"));
+                       .and_that(stringExtractor, is("string"));
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Test public void
+    canMixCallsTo_ExpectsThat_AndTo_AndThat() {
+        final StringActor actor = context.mock(StringActor.class);
+        final Extractor<Character, StringActor> characterExtractor = context.mock(Extractor.class, "character extractor");
+        final Extractor<String, StringActor> stringExtractor = context.mock(Extractor.class, "string extractor");
+        final Extractor<Integer, StringActor> intExtractor = context.mock(Extractor.class, "int extractor");
+        final Extractor<Double, StringActor> doubleExtractor = context.mock(Extractor.class, "double extractor");
+
+        context.checking(new Expectations() {{
+            oneOf(actor).grabUsing(characterExtractor); will(returnValue('a'));
+            oneOf(actor).grabUsing(stringExtractor); will(returnValue("string"));
+            oneOf(actor).grabUsing(intExtractor); will(returnValue(1));
+            oneOf(actor).grabUsing(doubleExtractor); will(returnValue(2.5));
+        }});
+
+        Then.the(actor).and_that(characterExtractor, is('a'))
+            .and_that(stringExtractor, is("string"))
+            .expects_that(intExtractor, is(1))
+            .expects_that(doubleExtractor, is(2.5));
     }
 
     @SuppressWarnings("unchecked")

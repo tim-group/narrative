@@ -28,4 +28,8 @@ public class When<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
         actor.perform(action);
         return this;
     }
+
+    public When<TOOL, ACTOR> and_to(Action<TOOL, ACTOR> action) {
+        return attempts_to(action);
+    }
 }

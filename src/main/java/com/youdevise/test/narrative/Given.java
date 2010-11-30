@@ -27,4 +27,8 @@ public class Given<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
         actor.perform(action);
         return this;
     }
+
+    public Given<TOOL, ACTOR> and_to(Action<TOOL, ACTOR> action) {
+        return was_able_to(action);
+	}
 }

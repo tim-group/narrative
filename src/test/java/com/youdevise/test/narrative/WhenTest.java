@@ -39,6 +39,29 @@ public class WhenTest {
         }});
         
         When.the(actor).attempts_to(action)
-                       .attempts_to(otherAction);
+                       .and_to(otherAction);
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Test public void
+    canMixCallsTo_AttempsTo_AndTo_AndTo() {
+        final StringActor actor = context.mock(StringActor.class);
+        final Action<String, StringActor> firstAction = context.mock(Action.class, "first action");
+        final Action<String, StringActor> secondAction = context.mock(Action.class, "second action");
+        final Action<String, StringActor> thirdAction = context.mock(Action.class, "third action");
+        final Action<String, StringActor> fourthAction = context.mock(Action.class, "fourth action");
+        
+        final Sequence orderOfActions = context.sequence("Order of the actions");
+        context.checking(new Expectations() {{
+            oneOf(actor).perform(firstAction); inSequence(orderOfActions);
+            oneOf(actor).perform(secondAction); inSequence(orderOfActions);
+            oneOf(actor).perform(thirdAction); inSequence(orderOfActions);
+            oneOf(actor).perform(fourthAction); inSequence(orderOfActions);
+        }});
+        
+        When.the(actor).and_to(firstAction)
+            .and_to(secondAction)
+            .and_to(thirdAction)
+            .attempts_to(fourthAction);
     }
 }

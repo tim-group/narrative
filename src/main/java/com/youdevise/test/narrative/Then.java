@@ -31,4 +31,8 @@ public class Then<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
         assertThat(actor.grabUsing(expected), matcher);
         return this;
     }
+
+    public <DATA> Then<TOOL, ACTOR> and_that(Extractor<DATA, ACTOR> expected, Matcher<? super DATA> matcher) {
+        return expects_that(expected, matcher);
+    }
 }
