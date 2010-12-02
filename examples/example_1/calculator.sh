@@ -1,8 +1,8 @@
 CLASSES_DIRECTORY="build/classes/main"
 JLINE_JAR="build/lib/jline-0.9.1.jar"
 CLASSPATH="$CLASSES_DIRECTORY:$JLINE_JAR"
-CONSOLE_CALCULATOR_CLASS_FILE=$CLASSES_DIRECTORY/"com/youdevise/narrative/example/ConsoleCalculator.class"
-CONSOLE_CALCULATOR_CLASS="com.youdevise.narrative.example.ConsoleCalculator"
+CONSOLE_CALCULATOR_CLASS_FILE="$CLASSES_DIRECTORY/ConsoleCalculator.class"
+CONSOLE_CALCULATOR_CLASS="ConsoleCalculator"
 
 if [ ! -f $CONSOLE_CALCULATOR_CLASS_FILE ]
 then
