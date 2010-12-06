@@ -24,7 +24,11 @@ public class Given<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
     }
 
     public Given<TOOL, ACTOR> was_able_to(Action<TOOL, ACTOR> action) {
-        actor.perform(action);
+        try {
+            actor.perform(action);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
         return this;
     }
 
