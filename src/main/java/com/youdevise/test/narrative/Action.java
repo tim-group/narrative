@@ -8,5 +8,5 @@ package com.youdevise.test.narrative;
  *            The type of the tool used by the Actor.
  */
 public interface Action<TOOL, ACTOR extends Actor<TOOL, ?>> {
-    void performFor(ACTOR actor);
+    void performFor(ACTOR actor) throws Throwable;
 }
