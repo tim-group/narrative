@@ -25,7 +25,11 @@ public class When<TOOL, ACTOR extends Actor<TOOL, ACTOR>> {
     }
 
     public When<TOOL, ACTOR> attempts_to(Action<TOOL, ACTOR> action) {
-        actor.perform(action);
+        try {
+            actor.perform(action);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
         return this;
     }
 

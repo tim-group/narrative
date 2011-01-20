@@ -11,6 +11,6 @@ package com.youdevise.test.narrative;
 public interface Actor<TYPE, IMPL extends Actor<TYPE, IMPL>> {
 	TYPE tool();
 
-    void perform(Action<TYPE, IMPL> action);
+    void perform(Action<TYPE, IMPL> action) throws Throwable;
     <DATA> DATA grabUsing(Extractor<DATA, IMPL> extractor);
 }
