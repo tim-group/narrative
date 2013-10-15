@@ -23,8 +23,14 @@ configurations {
     testCompile.exclude module: "hamcrest"
 }
 
-task sourcesJar(type: Jar, dependsOn:classes) {
+task packageSources(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
+ 
+artifacts {
+    archives jar
+    archives packageSources
+}
+
 
