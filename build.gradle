@@ -23,8 +23,8 @@ configurations {
     testCompile.exclude module: "hamcrest"
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '0.9-rc-1'
-    jarPath = 'wrapper'
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
