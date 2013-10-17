@@ -4,11 +4,31 @@ apply plugin: 'eclipse'
 defaultTasks 'clean', 'test', 'jar'
 
 group = "com.youdevise"
+ext.majorVersion=1
+ext.minorVersion=0
+
 targetCompatibility = 1.5
-version = '1.0'
-    
-repositories {  
-    mavenCentral()
+
+def isPrivateRelease() {
+    return System.getenv('BUILD_NUMBER') != null
+}
+
+if (isPrivateRelease()) {
+    def buildNumber = System.getenv('BUILD_NUMBER')
+    version = "${ext.majorVersion}.${ext.minorVersion}.${buildNumber}"
+} else /* dev build */ {
+    def timestamp = new Date().format('yyyyMMdd-HHmmss', TimeZone.getTimeZone('UTC'))
+    version = "${ext.majorVersion}.${ext.minorVersion}-${timestamp}"
+}
+
+repositories {
+    mavenLocal()
+    if (project.hasProperty('repoUrl')) {
+        mavenRepo url: "${project.repoUrl}/groups/public"
+    }
+    else {
+        mavenCentral()
+    }
 }
     
 dependencies {
@@ -32,5 +52,4 @@ artifacts {
     archives jar
     archives packageSources
 }
-
 
