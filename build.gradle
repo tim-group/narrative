@@ -9,11 +9,25 @@ ext.minorVersion=0
 
 targetCompatibility = 1.5
 
+
 def isPrivateRelease() {
     return System.getenv('BUILD_NUMBER') != null
 }
 
+buildscript {
+    if (System.getenv('BUILD_NUMBER') != null) {
+        repositories {
+            mavenRepo name: 'ydCentral', urls: "${repoUrl}/groups/public"
+        }
+        dependencies {
+            classpath group: 'com.youdevise', name: 'gradle-plugins', version: "0.+"
+        }
+    }
+}
+
+
 if (isPrivateRelease()) {
+    apply plugin: 'yd'
     def buildNumber = System.getenv('BUILD_NUMBER')
     version = "${ext.majorVersion}.${ext.minorVersion}.${buildNumber}"
 } else /* dev build */ {
