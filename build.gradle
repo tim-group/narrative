@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+if (System.getenv('BUILD_NUMBER') != null) {
+     apply plugin: 'yd'
+}
 
 defaultTasks 'clean', 'test', 'jar'
 
@@ -27,7 +30,6 @@ buildscript {
 
 
 if (isPrivateRelease()) {
-    apply plugin: 'yd'
     def buildNumber = System.getenv('BUILD_NUMBER')
     version = "${ext.majorVersion}.${ext.minorVersion}.${buildNumber}"
 } else /* dev build */ {
