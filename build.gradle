@@ -1,8 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-if (System.getenv('BUILD_NUMBER') != null) {
-     apply plugin: 'yd'
-}
 
 defaultTasks 'clean', 'test', 'jar'
 
