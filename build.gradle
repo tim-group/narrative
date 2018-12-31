@@ -11,9 +11,6 @@ archivesBaseName = 'narrative'
 ext.majorVersion=1
 ext.minorVersion=0
 
-targetCompatibility = 1.5
-
-
 def isPrivateRelease() {
     return System.getenv('BUILD_NUMBER') != null
 }
@@ -21,7 +18,9 @@ def isPrivateRelease() {
 buildscript {
     if (System.getenv('BUILD_NUMBER') != null) {
         repositories {
-            mavenRepo name: 'ydCentral', urls: "${repoUrl}/groups/public"
+            maven {
+                url = "$repoUrl/groups/public"
+            }
         }
         dependencies {
             classpath group: 'com.youdevise', name: 'gradle-plugins', version: "0.+"
@@ -41,7 +40,9 @@ if (isPrivateRelease()) {
 repositories {
     mavenLocal()
     if (project.hasProperty('repoUrl')) {
-        mavenRepo url: "${project.repoUrl}/groups/public"
+        maven {
+            url = "${project.repoUrl}/groups/public"
+        }
     }
     else {
         mavenCentral()
