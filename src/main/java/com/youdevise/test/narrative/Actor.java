@@ -3,7 +3,7 @@ package com.youdevise.test.narrative;
 /**
  * An entity performing actions during a narrative.
  *
- * @param <TOOL>
+ * @param <TYPE>
  *            The type of tool the Actor uses to perform actions.
  * @param <IMPL>
  *            The implementation class of the Actor, for typing purposes.
